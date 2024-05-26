@@ -1,0 +1,8 @@
+events:
+  blockplace: "&cYou cannot place blocks in Creative mode."
+  dropitem: "&cYou cannot drop items in Creative mode"
+commands:
+  reload_commands:
+    config_reloaded: " &aConfiguration reloaded."
+    invalid_argument: " &cInvalid argument. Only 'reload' is accepted."
+    provide_argument: " &cPlease provide an argument. Only 'reload' is accepted."

@@ -1,0 +1,8 @@
+name: PermissionsCreative
+version: '${project.version}'
+main: beta.com.permissionscreative.Main
+api-version: '1.20'
+authors: [Beta_BWJaguarr]
+commands:
+  permissions-creative:
+    description: Reloads the PermissionsCreative configuration.

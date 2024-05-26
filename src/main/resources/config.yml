@@ -1,0 +1,5 @@
+prefix: '&7[&6PermissionsCreative&7]'
+lang: 'tr'
+permissions:
+  build: true
+  drop: true

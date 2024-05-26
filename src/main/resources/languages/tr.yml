@@ -1,0 +1,8 @@
+events:
+  blockplace: "&cYaratıcı modda blok yerleştiremezsiniz."
+  dropitem: "Yaratıcı modda eşya atamazsınız."
+commands:
+  reload_commands:
+    config_reloaded: " &aYapılandırma yeniden yüklendi."
+    invalid_argument: " &cGeçersiz argüman. Sadece 'reload' kabul edilir."
+    provide_argument: " &cLütfen bir argüman sağlayın. Sadece 'reload' kabul edilir."

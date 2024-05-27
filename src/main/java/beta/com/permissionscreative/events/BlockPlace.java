@@ -25,7 +25,7 @@ public class BlockPlace implements Listener {
         if (player.getGameMode() == GameMode.CREATIVE && config.getConfig().getBoolean("permissions.build") && !player.hasPermission("permissionscreative.build.bypass")) {
             event.setCancelled(true);
             String message = langManager.getMessage("events.blockplace", config.getConfig().getString("lang"));
-            player.sendMessage(prefix + " " + ChatColor.RED + message);
+            player.sendMessage(prefix + " " + message);
         }
     }
 }

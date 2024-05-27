@@ -3,3 +3,10 @@ lang: 'tr'
 permissions:
   build: true
   drop: true
+  pvp: true
+  commands: true
+  throw: true
+inventory:
+  adventure: true
+  survival: true
+  spectator: true

@@ -1,6 +1,10 @@
 events:
   blockplace: "&cYou cannot place blocks in Creative mode."
   dropitem: "&cYou cannot drop items in Creative mode"
+  commands: "&cYou cannot use commands in Creative mode"
+  throw: "&cYou cannot throw any item in Creative mode"
+  pvp: "&cYou cannot hit any player in Creative mode"
+  gmdenied: "&cYou do not have the permissions to change the game mode."
 commands:
   reload_commands:
     config_reloaded: " &aConfiguration reloaded."

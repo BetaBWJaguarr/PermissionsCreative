@@ -1,6 +1,10 @@
 events:
   blockplace: "&cYaratıcı modda blok yerleştiremezsiniz."
-  dropitem: "Yaratıcı modda eşya atamazsınız."
+  dropitem: "&cYaratıcı modda eşya atamazsınız."
+  commands: "&cYaratıcı modda komut kullanamazsınız."
+  throw: "&cYaratıcı modda herhangi bir eşyayı fırlatamazsınız."
+  pvp: "&cYaratıcı modda herhangi bir oyuncuyla pvp yapamazsınız."
+  gmdenied: "&cOyun modunu değiştirme yetkisine sahip değilsiniz."
 commands:
   reload_commands:
     config_reloaded: " &aYapılandırma yeniden yüklendi."

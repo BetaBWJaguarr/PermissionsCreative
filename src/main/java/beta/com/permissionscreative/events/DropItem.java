@@ -25,7 +25,7 @@ public class DropItem implements Listener {
         if (player.getGameMode() == GameMode.CREATIVE && config.getConfig().getBoolean("permissions.drop") && !player.hasPermission("permissionscreative.drop.bypass")) {
             event.setCancelled(true);
             String message = langManager.getMessage("events.dropitem", config.getConfig().getString("lang"));
-            player.sendMessage(prefix + " " + ChatColor.RED + message);
+            player.sendMessage(prefix + " " + message);
         }
     }
 }

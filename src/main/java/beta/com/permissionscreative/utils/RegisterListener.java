@@ -1,7 +1,6 @@
 package beta.com.permissionscreative.utils;
 
-import beta.com.permissionscreative.events.BlockPlace;
-import beta.com.permissionscreative.events.DropItem;
+import beta.com.permissionscreative.events.*;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.plugin.PluginManager;
@@ -22,5 +21,9 @@ public class RegisterListener {
         PluginManager pm = plugin.getServer().getPluginManager();
         pm.registerEvents(new BlockPlace(config,langManager), plugin);
         pm.registerEvents(new DropItem(config,langManager), plugin);
+        pm.registerEvents(new CommandsEvent(config,langManager),plugin);
+        pm.registerEvents(new PlayerDamage(config,langManager),plugin);
+        pm.registerEvents(new PlayerInteract(config,langManager),plugin);
+        pm.registerEvents(new onGameModeChange(config,langManager),plugin);
     }
 }

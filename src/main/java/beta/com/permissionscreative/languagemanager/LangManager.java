@@ -41,9 +41,9 @@ public class LangManager {
                 String message = messageObj.toString();
                 return ChatColor.translateAlternateColorCodes('&', message);
             }
-            return ChatColor.translateAlternateColorCodes('&', "&cError: Key not found. Please contact the administrator.");
+            return getMessage("language-error.unknown_key", language);
         } else {
-            return ChatColor.translateAlternateColorCodes('&', "&cError: Language not supported. Please contact the administrator.");
+            return getMessage("language-error.unknown_language", language);
         }
     }
 

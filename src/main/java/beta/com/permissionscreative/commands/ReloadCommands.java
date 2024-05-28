@@ -20,18 +20,14 @@ public class ReloadCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
 
-        if (args.length > 0) {
-            if (args[0].equalsIgnoreCase("reload")) {
-                config.reloadConfig();
-                sender.sendMessage(prefix + ChatColor.GREEN + languageManager.getMessage("commands.reload_commands.config_reloaded",config.getConfig().getString("lang")));
-                return true;
-            } else {
-                sender.sendMessage(prefix + ChatColor.RED + languageManager.getMessage("commands.reload_commands.invalid_argument", config.getConfig().getString("lang")));
-                return false;
-            }
-        } else {
-            sender.sendMessage(prefix + ChatColor.RED + languageManager.getMessage("commands.reload_commands.provide_argument", config.getConfig().getString("lang")));
-            return false;
+        if (!sender.hasPermission("permissionscreative.reload")) {
+            sender.sendMessage(prefix + languageManager.getMessage("commands.reload_commands.no_permission",config.getConfig().getString("lang")));
+            return true;
         }
+
+        config.reloadConfig();
+        sender.sendMessage(prefix  + languageManager.getMessage("commands.reload_commands.config_reloaded",config.getConfig().getString("lang")));
+        return true;
     }
+
 }

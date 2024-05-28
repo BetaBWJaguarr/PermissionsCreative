@@ -5,8 +5,19 @@ events:
   throw: "&cYaratıcı modda herhangi bir eşyayı fırlatamazsınız."
   pvp: "&cYaratıcı modda herhangi bir oyuncuyla pvp yapamazsınız."
   gmdenied: "&cOyun modunu değiştirme yetkisine sahip değilsiniz."
+gui:
+  settingsgui:
+    success: "&a{settingName} {settingStatus} olarak değiştirildi."
 commands:
+  permissions-creative:
+    no_subcommand: " &cLütfen bir komut belirtin."
+    invalid_subcommand: " &cGeçerli bir komut belirtin."
+  setting_commands:
+    not_player: " &cSadece oyuncular kullanabilir!."
+    no_permissions: " &cBu komutu kullanmak için yeterli yetki yok."
   reload_commands:
     config_reloaded: " &aYapılandırma yeniden yüklendi."
-    invalid_argument: " &cGeçersiz argüman. Sadece 'reload' kabul edilir."
-    provide_argument: " &cLütfen bir argüman sağlayın. Sadece 'reload' kabul edilir."
+    no_permission: " &cBu komutu kullanmak için yeterli yetki yok."
+language-error:
+  unknown_language: "&cGirdiğiniz dil bilgisi gecersiz."
+  unknown_key: " &cGirdiğiniz anahtar bilgisi gecersiz."

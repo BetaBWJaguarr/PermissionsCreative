@@ -5,8 +5,19 @@ events:
   throw: "&cYou cannot throw any item in Creative mode"
   pvp: "&cYou cannot hit any player in Creative mode"
   gmdenied: "&cYou do not have the permissions to change the game mode."
+gui:
+  settingsgui:
+    success: "&a{settingName} has been changed to {settingStatus}."
 commands:
+  permissions-creative:
+    no_subcommand: " &cPlease specify a subcommand."
+    invalid_subcommand: " &cPlease specify a valid subcommand."
+  setting_commands:
+    not_player: " &cOnly players can use this command."
+    no_permissions: " &cYou don't have the permissions to use this command."
   reload_commands:
     config_reloaded: " &aConfiguration reloaded."
-    invalid_argument: " &cInvalid argument. Only 'reload' is accepted."
-    provide_argument: " &cPlease provide an argument. Only 'reload' is accepted."
+    no_permission: " &cYou don't have the permissions to use this command."
+language-error:
+  unknown_language: "&cPlease specify a valid language."
+  unknown_key: "&cPlease specify a valid key."

@@ -8,6 +8,8 @@ import beta.com.permissionscreative.utils.CommandsRegister;
 import beta.com.permissionscreative.utils.RegisterListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+
 public final class Main extends JavaPlugin {
 
     private Config config;
@@ -21,7 +23,10 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         config = new Config(this);
-        langManager = new LangManager();
+        ArrayList<String> langCodes = new ArrayList<>();
+        langCodes.add("en");
+        langCodes.add("tr");
+        langManager = new LangManager(langCodes,this);
         registerListener = new RegisterListener(this,config,langManager);
         registerListener.registerEvents();
 

@@ -10,6 +10,27 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
+/**
+ * The CommandsRegister class is responsible for registering and handling commands for the PermissionsCreative plugin.
+ *
+ *
+ * This class holds references to the Config, LangManager, SettingsCommands, ReloadCommands, and Plugin instances.
+ * It uses these references to execute the appropriate actions when a command is issued.
+ *
+ * @param config The Config instance used to access the plugin's configuration.
+ * @param langManager The LangManager instance used to access the plugin's language settings.
+ * @param plugin The Plugin instance representing the PermissionsCreative plugin.
+ *
+ * The constructor initializes the SettingsCommands and ReloadCommands with the provided Config, LangManager, and Plugin instances.
+ *
+ * The registerCommands method is used to register the "permissions-creative" command with the server.
+ *
+ * The handlePermissionsCreativeCommand method is the executor for the "permissions-creative" command. It checks the arguments of the command,
+ * and based on the subcommand (either "settings" or "reload"), it calls the appropriate method from the SettingsCommands or ReloadCommands instance.
+ * If no subcommand is provided, or if an invalid subcommand is provided, it sends an appropriate message to the sender.
+ */
+
+
 public class CommandsRegister {
 
     private Config config;

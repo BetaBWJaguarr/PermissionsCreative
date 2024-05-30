@@ -4,7 +4,14 @@ import org.bukkit.Material;
 
 public enum ThrowItems {
     ENDER_PEARL(Material.ENDER_PEARL),
-    FIREBALL(Material.FIRE_CHARGE);
+    EYE_OF_ENDER(Material.ENDER_EYE),
+    SNOWBALL(Material.SNOWBALL),
+    EGG(Material.EGG),
+    POTION(Material.POTION),
+    SPLASH_POTION(Material.SPLASH_POTION),
+    LINGERING_POTION(Material.LINGERING_POTION),
+    EXPERIENCE_BOTTLE(Material.EXPERIENCE_BOTTLE),
+    FIRE_CHARGE(Material.FIRE_CHARGE);
 
     private final Material material;
 

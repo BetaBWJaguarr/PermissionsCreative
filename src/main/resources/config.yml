@@ -1,5 +1,9 @@
 prefix: '&7[&6PermissionsCreative&7]'
 lang: 'tr'
+inventory-settings:
+  save-inventory: true
+  save-interval: 5
+  save-stop-inventory: true
 gui:
   random_item: false
   default_item: STONE
@@ -9,6 +13,10 @@ permissions:
   pvp: true
   commands: true
   throw: true
+  gui: true
+  pve: true
+  remove_effects: true
+  entity: true
 inventory:
   adventure: true
   survival: true

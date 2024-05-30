@@ -5,6 +5,10 @@ events:
   throw: "&cYaratıcı modda herhangi bir eşyayı fırlatamazsınız."
   pvp: "&cYaratıcı modda herhangi bir oyuncuyla pvp yapamazsınız."
   gmdenied: "&cOyun modunu değiştirme yetkisine sahip değilsiniz."
+  gui-disabled: "&cYaratıcı modda GUI'yi kullanamazsınız."
+  pve: "&cYaratıcı modda herhangi bir moba saldıramazsınız."
+  remove-effects: "&cYaratıcı modda etkileri kaldıramazsınız."
+  entity: "&cYaratıcı modda herhangi bir moba saldıramazsınız."
 gui:
   settingsgui:
     success: "&a{settingName} {settingStatus} olarak değiştirildi."

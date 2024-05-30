@@ -5,6 +5,10 @@ events:
   throw: "&cYou cannot throw any item in Creative mode"
   pvp: "&cYou cannot hit any player in Creative mode"
   gmdenied: "&cYou do not have the permissions to change the game mode."
+  gui-disabled: "&cYou cannot use the GUI in Creative mode."
+  pve: "&cYou cannot hit any mob in Creative mode."
+  remove-effects: "&cYou cannot remove effects in Creative mode."
+  entity: "&cYou cannot hit any entity in Creative mode."
 gui:
   settingsgui:
     success: "&a{settingName} has been changed to {settingStatus}."

@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
@@ -26,11 +27,13 @@ public class PlayerInteract implements Listener {
         Material itemInHand = player.getItemInHand().getType();
 
         if (player.getGameMode() == GameMode.CREATIVE && ThrowItems.isThrowItem(itemInHand)) {
-            String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-            if (config.getConfig().getBoolean("permissions.throw") && !player.hasPermission("permissionscreative.throw.bypass")) {
-                event.setCancelled(true);
-                String message = langManager.getMessage("events.throw", config.getConfig().getString("lang"));
-                player.sendMessage(prefix + " "  + message);
+            if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
+                String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+                if (config.getConfig().getBoolean("permissions.throw") && !player.hasPermission("permissionscreative.throw.bypass")) {
+                    event.setCancelled(true);
+                    String message = langManager.getMessage("events.throw", config.getConfig().getString("lang"));
+                    player.sendMessage(prefix + " " + message);
+                }
             }
         }
     }

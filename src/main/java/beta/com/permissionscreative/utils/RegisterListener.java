@@ -47,5 +47,9 @@ public class RegisterListener {
         pm.registerEvents(new PlayerDamage(config,langManager),plugin);
         pm.registerEvents(new PlayerInteract(config,langManager),plugin);
         pm.registerEvents(new onGameModeChange(config,langManager),plugin);
+        pm.registerEvents(new InventoryOpen(config,langManager),plugin);
+        pm.registerEvents(new EntityDamageByEntity(config,langManager),plugin);
+        pm.registerEvents(new PotionEvents(config,langManager),plugin);
+        pm.registerEvents(new PlayerInteractEntity(config,langManager),plugin);
     }
 }

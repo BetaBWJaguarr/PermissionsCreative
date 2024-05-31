@@ -22,6 +22,11 @@ commands:
   reload_commands:
     config_reloaded: " &aConfiguration reloaded."
     no_permission: " &cYou don't have the permissions to use this command."
+  reload-items:
+    items_reloaded: " &aItems reloaded."
+    no_permission:  " &cYou don't have the permissions to use this command."
+    player_not_found: " &cPlayer not found."
+    usage: " &cUsage: /permissions-creative reload-items <player>"
 language-error:
   unknown_language: "&cPlease specify a valid language."
   unknown_key: "&cPlease specify a valid key."

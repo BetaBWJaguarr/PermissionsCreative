@@ -1,7 +1,5 @@
 package beta.com.permissionscreative;
 
-import beta.com.permissionscreative.commands.ReloadCommands;
-import beta.com.permissionscreative.commands.SettingsCommands;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.inventorymanager.InventoryManager;
@@ -25,6 +23,12 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (getServer().getPluginManager().getPlugin("PaginationAPI") == null) {
+            getLogger().severe("PaginationAPI not found! Disabling plugin...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         config = new Config(this);
         ArrayList<String> langCodes = new ArrayList<>();
         langCodes.add("en");
@@ -33,11 +37,12 @@ public final class Main extends JavaPlugin {
         registerListener = new RegisterListener(this,config,langManager);
         registerListener.registerEvents();
 
-        commandsRegister = new CommandsRegister(config,langManager,this);
-        commandsRegister.registerCommands();
-
         DatabaseManager databaseManager = new DatabaseManager(this,config);
         InventoryManager inventoryManager = new InventoryManager(databaseManager,config);
+
+        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager);
+        commandsRegister.registerCommands();
+
         try {
             databaseManager.connect();
             databaseManager.startSavingTask(inventoryManager);

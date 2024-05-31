@@ -1,8 +1,11 @@
 package beta.com.permissionscreative.utils;
 
 import beta.com.permissionscreative.commands.ReloadCommands;
+import beta.com.permissionscreative.commands.ReloadItemCommands;
 import beta.com.permissionscreative.commands.SettingsCommands;
 import beta.com.permissionscreative.configuration.Config;
+import beta.com.permissionscreative.databasemanager.DatabaseManager;
+import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -37,13 +40,17 @@ public class CommandsRegister {
     private LangManager langManager;
     private SettingsCommands settingsCommands;
     private ReloadCommands reloadCommands;
+    private ReloadItemCommands reloadItemCommands;
+    private DatabaseManager databaseManager;
+    private InventoryManager inventoryManager;
     private Plugin plugin;
 
-    public CommandsRegister(Config config, LangManager langManager, Plugin plugin) {
+    public CommandsRegister(Config config, LangManager langManager, Plugin plugin,DatabaseManager databaseManager,InventoryManager inventoryManager) {
         this.config = config;
         this.langManager = langManager;
         this.settingsCommands = new SettingsCommands(plugin, langManager, config);
         this.reloadCommands = new ReloadCommands(config, langManager);
+        this.reloadItemCommands = new ReloadItemCommands(config, langManager,databaseManager,inventoryManager);
         this.plugin = plugin;
     }
 
@@ -67,6 +74,9 @@ public class CommandsRegister {
                 break;
             case "reload":
                 reloadCommands.onCommand(sender, command, label, args);
+                break;
+            case "reload-items":
+                reloadItemCommands.onCommand(sender, command, label, args);
                 break;
             default:
                 sender.sendMessage(prefix + langManager.getMessage("commands.permissions-creative.invalid_subcommand", config.getConfig().getString("lang")));

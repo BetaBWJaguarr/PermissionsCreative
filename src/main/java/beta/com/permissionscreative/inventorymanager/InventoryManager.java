@@ -52,4 +52,8 @@ public class InventoryManager {
             savePlayerInventory(player);
         }
     }
+
+    public void setPlayerInventory(Player player, ItemStack[] items) {
+        player.getInventory().setContents(items);
+    }
 }

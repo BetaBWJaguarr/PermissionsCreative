@@ -55,12 +55,12 @@ public class SettingsCommands implements CommandExecutor {
         }
 
         if (!sender.hasPermission("permissionscreative.settings")) {
-            sender.sendMessage(prefix + languageManager.getMessage("commands.setting_commands.no_permission", config.getConfig().getString("lang")));
+            sender.sendMessage(prefix + languageManager.getMessage("commands.setting_commands.no_permissions", config.getConfig().getString("lang")));
             return true;
         }
 
         Player player = (Player) sender;
-        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager);
+        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin);
         settingsGUI.open(plugin, player);
         return true;
     }

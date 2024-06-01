@@ -1,5 +1,7 @@
 package beta.com.permissionscreative.gui;
 
+import beta.com.paginationapi.itemmanager.ItemManager;
+import beta.com.paginationapi.navigation.Navigation;
 import beta.com.paginationapi.page.Pagination;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.listener.SettingsGUIListener;
@@ -44,21 +46,18 @@ public class SettingsGUI {
     private LangManager langManager;
     private Pagination pagination;
     private SettingsGUIListener settingsGUIListener;
+    private Navigation navigation;
+    private ItemManager itemManager;
 
-    public SettingsGUI(Config config, LangManager langManager,Plugin plugin) {
+    public SettingsGUI(Config config, LangManager langManager, Plugin plugin) {
+        itemManager = new ItemManager();
+        this.pagination = new Pagination(8, itemManager);
+        this.navigation = new Navigation(pagination);
+        this.settingsGUIListener = new SettingsGUIListener(this, config, plugin, langManager);
         this.config = config;
         this.langManager = langManager;
-        this.pagination = new Pagination(8, new ArrayList<>());
-        this.settingsGUIListener = new SettingsGUIListener(this, config, plugin, langManager);
     }
 
-    private ItemStack createNavigationItem(Material material, String name) {
-        ItemStack item = new ItemStack(material);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(name);
-        item.setItemMeta(meta);
-        return item;
-    }
 
     private ItemStack createSettingItem(String settingName, boolean settingEnabled, List<ItemsEnum> materials, Material defaultMaterial) {
         Material material;
@@ -101,11 +100,14 @@ public class SettingsGUI {
             items.add(createSettingItem(settingName, settingEnabled, materials, defaultMaterial));
         }
 
-        pagination.setItems(items);
+
 
         inventory = Bukkit.createInventory(null, 9, "Settings");
 
         inventory.clear();
+        itemManager.clearItems();
+
+        addItemsToInventory(items);
 
         int slot = pagination.hasPreviousPage() ? 1 : 0;
         for (ItemStack item : pagination.getCurrentPageItems()) {
@@ -114,14 +116,20 @@ public class SettingsGUI {
         }
 
         if (pagination.hasNextPage()) {
-            inventory.setItem(8, createNavigationItem(Material.ARROW, "Next Page"));
+            inventory.setItem(8, navigation.createNextPageButton());
         }
 
         if (pagination.hasPreviousPage()) {
-            inventory.setItem(0, createNavigationItem(Material.ARROW, "Previous Page"));
+            inventory.setItem(0, navigation.createPreviousPageButton());
         }
 
         player.openInventory(inventory);
+    }
+
+    public void addItemsToInventory(List<ItemStack> items) {
+        for (ItemStack item : items) {
+            itemManager.addItem(item);
+        }
     }
 
     public void open(Plugin plugin, Player player) {
@@ -135,5 +143,9 @@ public class SettingsGUI {
 
     public Pagination getPagination() {
         return pagination;
+    }
+
+    public ItemManager getitemManager() {
+        return itemManager;
     }
 }

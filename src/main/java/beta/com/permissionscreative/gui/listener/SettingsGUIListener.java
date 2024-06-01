@@ -51,7 +51,7 @@ public class SettingsGUIListener implements Listener {
         this.config = config;
         this.plugin = plugin;
         this.langManager = langManager;
-        this.paginationListener = new PaginationListener(settingsGUI.getPagination());
+        this.paginationListener = new PaginationListener(settingsGUI.getPagination(),settingsGUI.getitemManager());
     }
 
     @EventHandler

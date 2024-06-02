@@ -9,6 +9,7 @@ events:
   pve: "&cYou cannot hit any mob in Creative mode."
   remove-effects: "&cYou cannot remove effects in Creative mode."
   entity: "&cYou cannot hit any entity in Creative mode."
+  spawnegg: "&cYou cannot spawn mobs in Creative mode."
 gui:
   settingsgui:
     success: "&a{settingName} has been changed to {settingStatus}."

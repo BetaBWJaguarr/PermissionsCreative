@@ -32,24 +32,27 @@ public class RegisterListener {
     private final JavaPlugin plugin;
     private final Config config;
     private final LangManager langManager;
+    private final EventsManager eventsManager;
 
-    public RegisterListener(JavaPlugin plugin, Config config, LangManager langManager) {
+    public RegisterListener(JavaPlugin plugin, Config config, LangManager langManager, EventsManager eventsManager) {
         this.plugin = plugin;
         this.config = config;
         this.langManager = langManager;
+        this.eventsManager = eventsManager;
     }
 
     public void registerEvents() {
         PluginManager pm = plugin.getServer().getPluginManager();
-        pm.registerEvents(new BlockPlace(config,langManager), plugin);
-        pm.registerEvents(new DropItem(config,langManager), plugin);
-        pm.registerEvents(new CommandsEvent(config,langManager),plugin);
-        pm.registerEvents(new PlayerDamage(config,langManager),plugin);
-        pm.registerEvents(new PlayerInteract(config,langManager),plugin);
+        pm.registerEvents(new BlockPlace(config,langManager,eventsManager), plugin);
+        pm.registerEvents(new DropItem(config,langManager,eventsManager), plugin);
+        pm.registerEvents(new CommandsEvent(config,langManager,eventsManager),plugin);
+        pm.registerEvents(new PlayerDamage(config,langManager,eventsManager),plugin);
+        pm.registerEvents(new PlayerInteract(config,langManager,eventsManager),plugin);
         pm.registerEvents(new onGameModeChange(config,langManager),plugin);
-        pm.registerEvents(new InventoryOpen(config,langManager),plugin);
-        pm.registerEvents(new EntityDamageByEntity(config,langManager),plugin);
-        pm.registerEvents(new PotionEvents(config,langManager),plugin);
-        pm.registerEvents(new PlayerInteractEntity(config,langManager),plugin);
+        pm.registerEvents(new InventoryOpen(config,langManager,eventsManager),plugin);
+        pm.registerEvents(new EntityDamageByEntity(config,langManager,eventsManager),plugin);
+        pm.registerEvents(new PotionEvents(config,langManager,eventsManager),plugin);
+        pm.registerEvents(new PlayerInteractEntity(config,langManager,eventsManager),plugin);
+        pm.registerEvents(new CreatureSpawn(config,langManager,eventsManager),plugin);
     }
 }

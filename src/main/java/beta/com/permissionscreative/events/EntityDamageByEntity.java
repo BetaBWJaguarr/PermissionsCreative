@@ -1,6 +1,6 @@
 package beta.com.permissionscreative.events;
 
-import org.bukkit.ChatColor;
+import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,22 +12,21 @@ import beta.com.permissionscreative.languagemanager.LangManager;
 public class EntityDamageByEntity implements Listener {
     private final Config config;
     private final LangManager langManager;
+    private final EventsManager eventsManager;
 
-    public EntityDamageByEntity(Config config, LangManager langManager) {
+    public EntityDamageByEntity(Config config, LangManager langManager, EventsManager eventsManager) {
         this.config = config;
         this.langManager = langManager;
+        this.eventsManager = eventsManager;
     }
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
-            String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-            if (config.getConfig().getBoolean("permissions.pve") && player.getGameMode() == GameMode.CREATIVE) {
-                if (!player.hasPermission("permissionscreative.pve.bypass")) {
-                    event.setCancelled(true);
-                    player.sendMessage(prefix +  " " + langManager.getMessage("events.pve", config.getConfig().getString("lang")));
-                }
+            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve");
+            if (cancel) {
+                event.setCancelled(true);
             }
         }
     }

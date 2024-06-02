@@ -1,6 +1,6 @@
 package beta.com.permissionscreative.events;
 
-import org.bukkit.ChatColor;
+import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,20 +12,20 @@ import beta.com.permissionscreative.languagemanager.LangManager;
 public class BlockPlace implements Listener {
     private final Config config;
     private final LangManager langManager;
+    private final EventsManager eventsManager;
 
-    public BlockPlace(Config config, LangManager langManager) {
+    public BlockPlace(Config config, LangManager langManager, EventsManager eventsManager) {
         this.config = config;
         this.langManager = langManager;
+        this.eventsManager = eventsManager;
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-        if (player.getGameMode() == GameMode.CREATIVE && config.getConfig().getBoolean("permissions.build") && !player.hasPermission("permissionscreative.build.bypass")) {
+        boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.build"), "permissionscreative.build.bypass", "events.blockplace");
+        if (shouldCancel) {
             event.setCancelled(true);
-            String message = langManager.getMessage("events.blockplace", config.getConfig().getString("lang"));
-            player.sendMessage(prefix + " " + message);
         }
     }
 }

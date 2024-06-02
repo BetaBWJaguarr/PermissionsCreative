@@ -1,7 +1,7 @@
 package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.enums.ThrowItems;
-import org.bukkit.ChatColor;
+import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,10 +15,12 @@ import beta.com.permissionscreative.languagemanager.LangManager;
 public class PlayerInteract implements Listener {
     private final Config config;
     private final LangManager langManager;
+    private final EventsManager eventsManager;
 
-    public PlayerInteract(Config config, LangManager langManager) {
+    public PlayerInteract(Config config, LangManager langManager, EventsManager eventsManager) {
         this.config = config;
         this.langManager = langManager;
+        this.eventsManager = eventsManager;
     }
 
     @EventHandler
@@ -28,11 +30,9 @@ public class PlayerInteract implements Listener {
 
         if (player.getGameMode() == GameMode.CREATIVE && ThrowItems.isThrowItem(itemInHand)) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-                String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-                if (config.getConfig().getBoolean("permissions.throw") && !player.hasPermission("permissionscreative.throw.bypass")) {
+                boolean shouldcancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.throw"), "permissionscreative.throw.bypass", "events.throw");
+                if (shouldcancel) {
                     event.setCancelled(true);
-                    String message = langManager.getMessage("events.throw", config.getConfig().getString("lang"));
-                    player.sendMessage(prefix + " " + message);
                 }
             }
         }

@@ -17,6 +17,7 @@ permissions:
   pve: true
   remove_effects: true
   entity: true
+  spawnegg: true
 inventory:
   adventure: true
   survival: true

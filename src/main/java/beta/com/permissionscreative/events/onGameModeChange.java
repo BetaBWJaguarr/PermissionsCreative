@@ -21,28 +21,19 @@ public class onGameModeChange implements Listener {
     @EventHandler
     public void onGameModeChanges(PlayerGameModeChangeEvent event) {
         Player player = event.getPlayer();
+        GameMode newGameMode = event.getNewGameMode();
 
-        String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-        String message = langManager.getMessage("events.gmdenied", config.getConfig().getString("lang"));
+        if (newGameMode != GameMode.CREATIVE && !player.hasPermission("permissionscreative.gamemode.bypass")) {
+            String gameModeName = newGameMode.name();
+            boolean isGameModeAllowed = config.getConfig().getBoolean("inventory." + gameModeName);
 
-        if(event.getNewGameMode() != GameMode.CREATIVE) {
-            if(!player.hasPermission("permissionscreative.throw.bypass")){
-                if (!(config.getConfig().getBoolean("inventory.adventure"))) {
-                    event.setCancelled(true);
-                    player.sendMessage(prefix + " "  + message);
+            if (!isGameModeAllowed) {
+                String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+                String message = langManager.getMessage("events.gmdenied", config.getConfig().getString("lang"));
 
-                }
-                else if (!(config.getConfig().getBoolean("inventory.survival"))) {
-                    event.setCancelled(true);
-                    player.sendMessage(prefix + " "  + message);
-
-                }
-                else if (!(config.getConfig().getBoolean("inventory.spectator"))) {
-                    event.setCancelled(true);
-                    player.sendMessage(prefix + " " + message);
-
-                }
-
-        }}
+                event.setCancelled(true);
+                player.sendMessage(prefix + " " + message);
+            }
+        }
     }
 }

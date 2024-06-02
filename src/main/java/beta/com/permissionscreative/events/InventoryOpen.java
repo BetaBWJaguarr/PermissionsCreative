@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -12,22 +13,21 @@ import beta.com.permissionscreative.languagemanager.LangManager;
 public class InventoryOpen implements Listener {
     private final Config config;
     private final LangManager langManager;
+    private final EventsManager eventsManager;
 
-    public InventoryOpen(Config config, LangManager langManager) {
+    public InventoryOpen(Config config, LangManager langManager, EventsManager eventsManager) {
         this.config = config;
         this.langManager = langManager;
+        this.eventsManager = eventsManager;
     }
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
         if (event.getPlayer() instanceof Player) {
             Player player = (Player) event.getPlayer();
-            String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-            if (config.getConfig().getBoolean("permissions.gui")) {
-                if (!player.hasPermission("permissionscreative.bypass.gui") && player.getGameMode() == GameMode.CREATIVE) {
-                    event.setCancelled(true);
-                    player.sendMessage(prefix +  " " + langManager.getMessage("events.gui-disabled", config.getConfig().getString("lang")));
-                }
+            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled");
+            if (cancel) {
+                event.setCancelled(true);
             }
         }
     }

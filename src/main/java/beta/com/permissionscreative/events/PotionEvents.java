@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -15,10 +16,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 public class PotionEvents implements Listener {
     private final Config config;
     private final LangManager langManager;
+    private final EventsManager eventsManager;
 
-    public PotionEvents(Config config, LangManager langManager) {
+    public PotionEvents(Config config, LangManager langManager, EventsManager eventsManager) {
         this.config = config;
         this.langManager = langManager;
+        this.eventsManager = eventsManager;
     }
 
     @EventHandler
@@ -36,10 +39,9 @@ public class PotionEvents implements Listener {
             ThrownPotion potion = (ThrownPotion) event.getEntity();
             if (potion.getShooter() instanceof Player) {
                 Player player = (Player) potion.getShooter();
-                String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-                if (config.getConfig().getBoolean("permissions.remove_effects") && player.getGameMode() == GameMode.CREATIVE && !player.hasPermission("permissionscreative.removeeffects.bypass")) {
+                boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects");
+                if (cancel) {
                     event.setCancelled(true);
-                    player.sendMessage(prefix + " " + langManager.getMessage("events.remove-effects", config.getConfig().getString("lang")));
                 }
             }
         }

@@ -9,6 +9,7 @@ events:
   pve: "&cYaratıcı modda herhangi bir moba saldıramazsınız."
   remove-effects: "&cYaratıcı modda etkileri kaldıramazsınız."
   entity: "&cYaratıcı modda herhangi bir moba saldıramazsınız."
+  spawnegg: "&cYaratıcı modda yaratık spawn edemezsiniz.."
 gui:
   settingsgui:
     success: "&a{settingName} {settingStatus} olarak değiştirildi."

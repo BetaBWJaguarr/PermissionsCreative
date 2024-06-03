@@ -19,12 +19,14 @@ public class PotionEvents implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public PotionEvents(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public PotionEvents(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -45,7 +47,7 @@ public class PotionEvents implements Listener {
                 boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects");
                 if (cancel) {
                     event.setCancelled(true);
-                    Logger.log("discord.events.remove_effects.actions", "discord.events.remove_effects.message", player, discordLogAction);
+                    logger.log("discord.events.remove_effects.actions", "discord.events.remove_effects.message", player, discordLogAction);
                 }
             }
         }

@@ -17,12 +17,14 @@ public class onGameModeChange implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public onGameModeChange(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public onGameModeChange(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
 
@@ -41,7 +43,7 @@ public class onGameModeChange implements Listener {
 
                 event.setCancelled(true);
                 player.sendMessage(prefix + " " + message);
-                Logger.log("discord.events.gamemode.actions", "discord.events.gamemode.message", player, discordLogAction);
+                logger.log("discord.events.gamemode.actions", "discord.events.gamemode.message", player, discordLogAction);
             }
         }
     }

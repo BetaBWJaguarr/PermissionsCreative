@@ -19,12 +19,14 @@ public class PlayerInteract implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public PlayerInteract(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public PlayerInteract(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -37,7 +39,7 @@ public class PlayerInteract implements Listener {
                 boolean shouldcancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.throw"), "permissionscreative.throw.bypass", "events.throw");
                 if (shouldcancel) {
                     event.setCancelled(true);
-                    Logger.log("discord.events.throw.actions", "discord.events.throw.message", player, discordLogAction);
+                    logger.log("discord.events.throw.actions", "discord.events.throw.message", player, discordLogAction);
                 }
             }
         }

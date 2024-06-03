@@ -8,6 +8,7 @@ import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.CommandsRegister;
 import beta.com.permissionscreative.utils.EventsManager;
+import beta.com.permissionscreative.utils.Logger;
 import beta.com.permissionscreative.utils.RegisterListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +30,8 @@ public final class Main extends JavaPlugin {
     private DiscordBot discordBot;
     private DiscordLogAction discordLogAction;
 
+    private Logger logger;
+
     @Override
     public void onEnable() {
         if (getServer().getPluginManager().getPlugin("PaginationAPI") == null) {
@@ -49,8 +52,9 @@ public final class Main extends JavaPlugin {
             discordLogAction = new DiscordLogAction(discordBot,config);
         }
 
+        logger = new Logger(config,langManager,this);
 
-        registerListener = new RegisterListener(this,config,langManager,eventsManager,discordLogAction);
+        registerListener = new RegisterListener(this,config,langManager,eventsManager,discordLogAction,logger);
         registerListener.registerEvents();
 
         DatabaseManager databaseManager = new DatabaseManager(this,config);

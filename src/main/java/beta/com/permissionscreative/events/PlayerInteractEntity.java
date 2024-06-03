@@ -18,12 +18,14 @@ public class PlayerInteractEntity implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private  final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public PlayerInteractEntity(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public PlayerInteractEntity(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -41,7 +43,7 @@ public class PlayerInteractEntity implements Listener {
         boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.entity"), "permissionscreative.entity.bypass", "events.entity");
         if (cancel) {
             event.setCancelled(true);
-            Logger.log("discord.events.entity.actions", "discord.events.entity.message", player, discordLogAction);
+            logger.log("discord.events.entity.actions", "discord.events.entity.message", player, discordLogAction);
         }
     }
 }

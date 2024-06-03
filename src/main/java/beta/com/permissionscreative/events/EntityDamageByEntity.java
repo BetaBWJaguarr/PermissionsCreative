@@ -16,12 +16,14 @@ public class EntityDamageByEntity implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public EntityDamageByEntity(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public EntityDamageByEntity(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -31,7 +33,7 @@ public class EntityDamageByEntity implements Listener {
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve");
             if (cancel) {
                 event.setCancelled(true);
-                Logger.log("discord.events.pve.actions", "discord.events.pve.message", player, discordLogAction);
+                logger.log("discord.events.pve.actions", "discord.events.pve.message", player, discordLogAction);
             }
         }
     }

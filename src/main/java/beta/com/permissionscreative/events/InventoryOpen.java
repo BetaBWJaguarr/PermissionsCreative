@@ -17,12 +17,14 @@ public class InventoryOpen implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public InventoryOpen(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public InventoryOpen(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -32,7 +34,7 @@ public class InventoryOpen implements Listener {
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled");
             if (cancel) {
                 event.setCancelled(true);
-                Logger.log("discord.events.gui.actions", "discord.events.gui.message", player, discordLogAction);
+                logger.log("discord.events.gui.actions", "discord.events.gui.message", player, discordLogAction);
             }
         }
     }

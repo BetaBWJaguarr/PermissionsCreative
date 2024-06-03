@@ -17,12 +17,14 @@ public class CommandsEvent implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public CommandsEvent(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public CommandsEvent(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -36,7 +38,7 @@ public class CommandsEvent implements Listener {
         boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.commands"), "permissionscreative.commands.bypass", "events.commands");
         if (shouldCancel) {
             event.setCancelled(true);
-            Logger.log("discord.events.commands.actions", "discord.events.commands.message", player, discordLogAction);
+            logger.log("discord.events.commands.actions", "discord.events.commands.message", player, discordLogAction);
         }
     }
 }

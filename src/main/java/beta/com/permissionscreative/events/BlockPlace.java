@@ -1,7 +1,6 @@
 package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
-import beta.com.permissionscreative.object.EventsType;
 import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -17,12 +16,14 @@ public class BlockPlace implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public BlockPlace(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public BlockPlace(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -31,7 +32,7 @@ public class BlockPlace implements Listener {
         boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.build"), "permissionscreative.build.bypass", "events.blockplace");
         if (shouldCancel) {
             event.setCancelled(true);
-            Logger.log("discord.events.blockplace.actions", "discord.events.blockplace.message", player, discordLogAction);
+            logger.log("discord.events.blockplace.actions", "discord.events.blockplace.message", player, discordLogAction);
         }
     }
 }

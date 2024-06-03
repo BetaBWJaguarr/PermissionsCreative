@@ -17,12 +17,14 @@ public class CreatureSpawn implements Listener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public CreatureSpawn(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public CreatureSpawn(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -34,7 +36,7 @@ public class CreatureSpawn implements Listener {
             boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.spawnegg"), "permissionscreative.spawnegg.bypass", "events.spawnegg");
             if (shouldCancel) {
                 event.setCancelled(true);
-                Logger.log("discord.events.spawnegg.actions", "discord.events.spawnegg.message", player, discordLogAction);
+                logger.log("discord.events.spawnegg.actions", "discord.events.spawnegg.message", player, discordLogAction);
             }
         }
     }

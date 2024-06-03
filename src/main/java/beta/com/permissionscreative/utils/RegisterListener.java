@@ -36,28 +36,30 @@ public class RegisterListener {
     private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
+    private final Logger logger;
 
-    public RegisterListener(JavaPlugin plugin, Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
+    public RegisterListener(JavaPlugin plugin, Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.plugin = plugin;
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
+        this.logger = logger;
     }
 
     public void registerEvents() {
         PluginManager pm = plugin.getServer().getPluginManager();
-        pm.registerEvents(new BlockPlace(config,langManager,eventsManager,discordLogAction), plugin);
-        pm.registerEvents(new DropItem(config,langManager,eventsManager,discordLogAction), plugin);
-        pm.registerEvents(new CommandsEvent(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new PlayerDamage(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new PlayerInteract(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new onGameModeChange(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new InventoryOpen(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new EntityDamageByEntity(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new PotionEvents(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new PlayerInteractEntity(config,langManager,eventsManager,discordLogAction),plugin);
-        pm.registerEvents(new CreatureSpawn(config,langManager,eventsManager,discordLogAction),plugin);
+        pm.registerEvents(new BlockPlace(config,langManager,eventsManager,discordLogAction,logger), plugin);
+        pm.registerEvents(new DropItem(config,langManager,eventsManager,discordLogAction,logger), plugin);
+        pm.registerEvents(new CommandsEvent(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PlayerDamage(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PlayerInteract(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new onGameModeChange(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new InventoryOpen(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new EntityDamageByEntity(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PotionEvents(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PlayerInteractEntity(config,langManager,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new CreatureSpawn(config,langManager,eventsManager,discordLogAction,logger),plugin);
         pm.registerEvents(new ChestShopProtection(config,eventsManager),plugin);
     }
 }

@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.utils.Logger;
 
 public class PlayerDamage implements Listener {
     private final Config config;
@@ -30,7 +31,7 @@ public class PlayerDamage implements Listener {
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pvp"), "permissionscreative.pvp.bypass", "events.pvp");
             if (cancel) {
                 event.setCancelled(true);
-                eventsManager.logEvent("discord.events.pvp.actions", "discord.events.pvp.message", player, discordLogAction);
+                Logger.log("discord.events.pvp.actions", "discord.events.pvp.message", player, discordLogAction);
             }
         }
     }

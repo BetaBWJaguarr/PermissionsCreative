@@ -12,6 +12,7 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import beta.com.permissionscreative.utils.Logger;
 
 public class PotionEvents implements Listener {
     private final Config config;
@@ -44,7 +45,7 @@ public class PotionEvents implements Listener {
                 boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects");
                 if (cancel) {
                     event.setCancelled(true);
-                    eventsManager.logEvent("discord.events.remove_effects.actions", "discord.events.remove_effects.message", player, discordLogAction);
+                    Logger.log("discord.events.remove_effects.actions", "discord.events.remove_effects.message", player, discordLogAction);
                 }
             }
         }

@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.GameMode;
+import beta.com.permissionscreative.utils.Logger;
+
 public class onGameModeChange implements Listener {
 
     private final Config config;
@@ -39,7 +41,7 @@ public class onGameModeChange implements Listener {
 
                 event.setCancelled(true);
                 player.sendMessage(prefix + " " + message);
-                eventsManager.logEvent("discord.events.gamemode.actions", "discord.events.gamemode.message", player, discordLogAction);
+                Logger.log("discord.events.gamemode.actions", "discord.events.gamemode.message", player, discordLogAction);
             }
         }
     }

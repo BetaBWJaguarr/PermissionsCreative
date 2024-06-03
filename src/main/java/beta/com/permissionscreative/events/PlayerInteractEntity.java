@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.utils.Logger;
 
 public class PlayerInteractEntity implements Listener {
     private final Config config;
@@ -40,7 +41,7 @@ public class PlayerInteractEntity implements Listener {
         boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.entity"), "permissionscreative.entity.bypass", "events.entity");
         if (cancel) {
             event.setCancelled(true);
-            eventsManager.logEvent("discord.events.entity.actions", "discord.events.entity.message", player, discordLogAction);
+            Logger.log("discord.events.entity.actions", "discord.events.entity.message", player, discordLogAction);
         }
     }
 }

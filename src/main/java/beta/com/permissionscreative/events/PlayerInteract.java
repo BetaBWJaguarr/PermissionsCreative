@@ -12,6 +12,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.utils.Logger;
 
 public class PlayerInteract implements Listener {
     private final Config config;
@@ -36,7 +37,7 @@ public class PlayerInteract implements Listener {
                 boolean shouldcancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.throw"), "permissionscreative.throw.bypass", "events.throw");
                 if (shouldcancel) {
                     event.setCancelled(true);
-                    eventsManager.logEvent("discord.events.throw.actions", "discord.events.throw.message", player, discordLogAction);
+                    Logger.log("discord.events.throw.actions", "discord.events.throw.message", player, discordLogAction);
                 }
             }
         }

@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.utils.Logger;
 
 public class InventoryOpen implements Listener {
     private final Config config;
@@ -31,7 +32,7 @@ public class InventoryOpen implements Listener {
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled");
             if (cancel) {
                 event.setCancelled(true);
-                eventsManager.logEvent("discord.events.gui.actions", "discord.events.gui.message", player, discordLogAction);
+                Logger.log("discord.events.gui.actions", "discord.events.gui.message", player, discordLogAction);
             }
         }
     }

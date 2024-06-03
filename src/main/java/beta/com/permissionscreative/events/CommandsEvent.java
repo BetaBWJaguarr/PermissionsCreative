@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.utils.Logger;
 
 public class CommandsEvent implements Listener {
     private final Config config;
@@ -35,7 +36,7 @@ public class CommandsEvent implements Listener {
         boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.commands"), "permissionscreative.commands.bypass", "events.commands");
         if (shouldCancel) {
             event.setCancelled(true);
-            eventsManager.logEvent("discord.events.commands.actions", "discord.events.commands.message", player, discordLogAction);
+            Logger.log("discord.events.commands.actions", "discord.events.commands.message", player, discordLogAction);
         }
     }
 }

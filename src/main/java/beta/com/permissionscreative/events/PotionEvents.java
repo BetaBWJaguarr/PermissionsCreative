@@ -1,7 +1,7 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
@@ -17,11 +17,13 @@ public class PotionEvents implements Listener {
     private final Config config;
     private final LangManager langManager;
     private final EventsManager eventsManager;
+    private final DiscordLogAction discordLogAction;
 
-    public PotionEvents(Config config, LangManager langManager, EventsManager eventsManager) {
+    public PotionEvents(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
+        this.discordLogAction = discordLogAction;
     }
 
     @EventHandler
@@ -42,6 +44,7 @@ public class PotionEvents implements Listener {
                 boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects");
                 if (cancel) {
                     event.setCancelled(true);
+                    eventsManager.logEvent("discord.events.remove_effects.actions", "discord.events.remove_effects.message", player, discordLogAction);
                 }
             }
         }

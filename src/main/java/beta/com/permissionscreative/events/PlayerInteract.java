@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.enums.ThrowItems;
 import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
@@ -16,11 +17,13 @@ public class PlayerInteract implements Listener {
     private final Config config;
     private final LangManager langManager;
     private final EventsManager eventsManager;
+    private final DiscordLogAction discordLogAction;
 
-    public PlayerInteract(Config config, LangManager langManager, EventsManager eventsManager) {
+    public PlayerInteract(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
+        this.discordLogAction = discordLogAction;
     }
 
     @EventHandler
@@ -33,6 +36,7 @@ public class PlayerInteract implements Listener {
                 boolean shouldcancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.throw"), "permissionscreative.throw.bypass", "events.throw");
                 if (shouldcancel) {
                     event.setCancelled(true);
+                    eventsManager.logEvent("discord.events.throw.actions", "discord.events.throw.message", player, discordLogAction);
                 }
             }
         }

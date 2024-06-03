@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -13,11 +14,13 @@ public class EntityDamageByEntity implements Listener {
     private final Config config;
     private final LangManager langManager;
     private final EventsManager eventsManager;
+    private final DiscordLogAction discordLogAction;
 
-    public EntityDamageByEntity(Config config, LangManager langManager, EventsManager eventsManager) {
+    public EntityDamageByEntity(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
+        this.discordLogAction = discordLogAction;
     }
 
     @EventHandler
@@ -27,6 +30,7 @@ public class EntityDamageByEntity implements Listener {
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve");
             if (cancel) {
                 event.setCancelled(true);
+                eventsManager.logEvent("discord.events.pve.actions", "discord.events.pve.message", player, discordLogAction);
             }
         }
     }

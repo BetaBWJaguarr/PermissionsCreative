@@ -18,6 +18,19 @@ permissions:
   remove_effects: true
   entity: true
   spawnegg: true
+  plugins:
+    chestshop: true
+logging:
+  discordbot:
+    enabled: false
+    token: ''
+    channel_id: ''
+  gamechat:
+    enabled: true
+  console:
+    enabled: true
+  file:
+    enabled: true
 inventory:
   adventure: true
   survival: true

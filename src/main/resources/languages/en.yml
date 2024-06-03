@@ -10,6 +10,43 @@ events:
   remove-effects: "&cYou cannot remove effects in Creative mode."
   entity: "&cYou cannot hit any entity in Creative mode."
   spawnegg: "&cYou cannot spawn mobs in Creative mode."
+  plugins:
+    chestshop: "&cYou cannot use ChestShop in Creative mode."
+discord:
+  events:
+    blockplace:
+      message: "player named tried to block place!"
+      actions: "Block Place"
+    commands:
+      message: "player named tried to use commands!"
+      actions: "Command Usage"
+    spawnegg:
+      message: "player named tried to spawn a mob!"
+      actions: "Spawn Mob"
+    drop:
+      message: "player named tried to drop an item!"
+      actions: "Drop Item"
+    pve:
+      message: "player named tried to hit a mob!"
+      actions: "Hit Mob"
+    gui:
+      message: "player named tried to use the GUI!"
+      actions: "GUI Usage"
+    gamemode:
+      message: "player named tried to change the game mode!"
+      actions: "Game Mode Change"
+    pvp:
+      message: "player named tried to hit a player!"
+      actions: "Hit Player"
+    throw:
+      message: "player named tried to throw an item!"
+      actions: "Throw Item"
+    entity:
+      message: "player named tried to hit an entity!"
+      actions: "Hit Entity"
+    remove_effects:
+      message: "player named tried to remove effects!"
+      actions: "Remove Effects"
 gui:
   settingsgui:
     success: "&a{settingName} has been changed to {settingStatus}."

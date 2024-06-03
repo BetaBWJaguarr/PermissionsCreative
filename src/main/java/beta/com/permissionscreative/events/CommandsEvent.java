@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -14,11 +15,13 @@ public class CommandsEvent implements Listener {
     private final Config config;
     private final LangManager langManager;
     private final EventsManager eventsManager;
+    private final DiscordLogAction discordLogAction;
 
-    public CommandsEvent(Config config, LangManager langManager, EventsManager eventsManager) {
+    public CommandsEvent(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
+        this.discordLogAction = discordLogAction;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -32,6 +35,7 @@ public class CommandsEvent implements Listener {
         boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.commands"), "permissionscreative.commands.bypass", "events.commands");
         if (shouldCancel) {
             event.setCancelled(true);
+            eventsManager.logEvent("discord.events.commands.actions", "discord.events.commands.message", player, discordLogAction);
         }
     }
 }

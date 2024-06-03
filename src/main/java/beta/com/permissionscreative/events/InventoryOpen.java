@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -14,11 +15,13 @@ public class InventoryOpen implements Listener {
     private final Config config;
     private final LangManager langManager;
     private final EventsManager eventsManager;
+    private final DiscordLogAction discordLogAction;
 
-    public InventoryOpen(Config config, LangManager langManager, EventsManager eventsManager) {
+    public InventoryOpen(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
+        this.discordLogAction = discordLogAction;
     }
 
     @EventHandler
@@ -28,6 +31,7 @@ public class InventoryOpen implements Listener {
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled");
             if (cancel) {
                 event.setCancelled(true);
+                eventsManager.logEvent("discord.events.gui.actions", "discord.events.gui.message", player, discordLogAction);
             }
         }
     }

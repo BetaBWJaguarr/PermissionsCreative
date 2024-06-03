@@ -10,6 +10,43 @@ events:
   remove-effects: "&cYaratıcı modda etkileri kaldıramazsınız."
   entity: "&cYaratıcı modda herhangi bir moba saldıramazsınız."
   spawnegg: "&cYaratıcı modda yaratık spawn edemezsiniz.."
+  plugins:
+    chestshop: "&cYaratıcı modda ChestShop kullanamazsınız."
+discord:
+  events:
+    blockplace:
+      message: "adlı oyuncu blok yerleştirmeye çalıştı!"
+      actions: "Blok Yerleştirme"
+    commands:
+      message: "adlı oyuncu komut kullanmaya çalıştı!"
+      actions: "Komut Kullanma"
+    spawnegg:
+      message: "adlı oyuncu yaratık spawn etmeye çalıştı!"
+      actions: "Yaratık Spawn Etme"
+    drop:
+      message: "adlı oyuncu eşya atmaya çalıştı!"
+      actions: "Eşya Atma"
+    pve:
+      message: "adlı oyuncu moba saldırmaya çalıştı!"
+      actions: "Moba Saldırı"
+    gui:
+      message: "adlı oyuncu GUI'yi kullanmaya çalıştı!"
+      actions: "GUI Kullanma"
+    gamemode:
+      message: "adlı oyuncu oyun modunu değiştirmeye çalıştı!"
+      actions: "Oyun Modu Değiştirme"
+    pvp:
+      message: "adlı oyuncu pvp yapmaya çalıştı!"
+      actions: "Pvp Yapma"
+    throw:
+      message: "adlı oyuncu eşya fırlatmaya çalıştı!"
+      actions: "Eşya Fırlatma"
+    entity:
+      message: "adlı oyuncu moba saldırmaya çalıştı!"
+      actions: "Moba Saldırma"
+    remove_effects:
+      message: "adlı oyuncu etkileri kaldırmaya çalıştı!"
+      actions: "Etkileri Kaldırma"
 gui:
   settingsgui:
     success: "&a{settingName} {settingStatus} olarak değiştirildi."

@@ -90,6 +90,9 @@ public class SettingsGUI {
         List<ItemStack> items = new ArrayList<>();
         for (Map.Entry<String, Object> entry : permissionsSettings.entrySet()) {
             String settingName = entry.getKey();
+            if (settingName.equals("plugins")) {
+                continue;
+            }
             boolean settingEnabled = config.getConfig().getBoolean("permissions." + settingName);
             items.add(createSettingItem(settingName, settingEnabled, materials, defaultMaterial));
         }

@@ -2,6 +2,8 @@ package beta.com.permissionscreative;
 
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
+import beta.com.permissionscreative.discord.DiscordBot;
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.CommandsRegister;
@@ -24,6 +26,9 @@ public final class Main extends JavaPlugin {
 
     private EventsManager eventsManager;
 
+    private DiscordBot discordBot;
+    private DiscordLogAction discordLogAction;
+
     @Override
     public void onEnable() {
         if (getServer().getPluginManager().getPlugin("PaginationAPI") == null) {
@@ -37,8 +42,15 @@ public final class Main extends JavaPlugin {
         langCodes.add("en");
         langCodes.add("tr");
         langManager = new LangManager(langCodes,this);
-        eventsManager = new EventsManager(config,langManager);
-        registerListener = new RegisterListener(this,config,langManager,eventsManager);
+        eventsManager = new EventsManager(config,langManager,this);
+
+        if (config.getConfig().getBoolean("logging.discordbot.enabled")) {
+            discordBot = new DiscordBot(config.getConfig().getString("logging.discordbot.token"));
+            discordLogAction = new DiscordLogAction(discordBot,config);
+        }
+
+
+        registerListener = new RegisterListener(this,config,langManager,eventsManager,discordLogAction);
         registerListener.registerEvents();
 
         DatabaseManager databaseManager = new DatabaseManager(this,config);

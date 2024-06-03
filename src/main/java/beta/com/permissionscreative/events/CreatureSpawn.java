@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -14,11 +15,13 @@ public class CreatureSpawn implements Listener {
     private final Config config;
     private final LangManager langManager;
     private final EventsManager eventsManager;
+    private final DiscordLogAction discordLogAction;
 
-    public CreatureSpawn(Config config, LangManager langManager, EventsManager eventsManager) {
+    public CreatureSpawn(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction) {
         this.config = config;
         this.langManager = langManager;
         this.eventsManager = eventsManager;
+        this.discordLogAction = discordLogAction;
     }
 
     @EventHandler
@@ -30,6 +33,7 @@ public class CreatureSpawn implements Listener {
             boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.spawnegg"), "permissionscreative.spawnegg.bypass", "events.spawnegg");
             if (shouldCancel) {
                 event.setCancelled(true);
+                eventsManager.logEvent("discord.events.spawnegg.actions", "discord.events.spawnegg.message", player, discordLogAction);
             }
         }
     }

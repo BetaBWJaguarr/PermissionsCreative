@@ -1,5 +1,7 @@
 package beta.com.permissionscreative;
 
+import beta.com.paginationapi.itemmanager.ItemManager;
+import beta.com.paginationapi.page.Pagination;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.discord.DiscordBot;
@@ -49,7 +51,7 @@ public final class Main extends JavaPlugin {
 
         if (config.getConfig().getBoolean("logging.discordbot.enabled")) {
             discordBot = new DiscordBot(config.getConfig().getString("logging.discordbot.token"));
-            discordLogAction = new DiscordLogAction(discordBot,config);
+            discordLogAction = new DiscordLogAction(discordBot,config,langManager);
         }
 
         logger = new Logger(config,langManager,this);
@@ -60,7 +62,10 @@ public final class Main extends JavaPlugin {
         DatabaseManager databaseManager = new DatabaseManager(this,config);
         InventoryManager inventoryManager = new InventoryManager(databaseManager,config);
 
-        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager);
+        ItemManager itemManager = new ItemManager();
+        Pagination pagination = new Pagination(8,itemManager);
+
+        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,pagination);
         commandsRegister.registerCommands();
 
         try {

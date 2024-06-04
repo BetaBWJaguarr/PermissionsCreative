@@ -13,6 +13,7 @@ events:
   plugins:
     chestshop: "&cYou cannot use ChestShop in Creative mode."
 discord:
+  not_channel_found: "&cChannel not found."
   events:
     blockplace:
       message: "player named tried to block place!"
@@ -47,6 +48,9 @@ discord:
     remove_effects:
       message: "player named tried to remove effects!"
       actions: "Remove Effects"
+    chestshop:
+      message: "player named tried to use ChestShop plugins!"
+      actions: "ChestShop Usage"
 gui:
   settingsgui:
     success: "&a{settingName} has been changed to {settingStatus}."

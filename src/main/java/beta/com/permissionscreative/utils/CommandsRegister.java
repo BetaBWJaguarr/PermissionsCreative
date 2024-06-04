@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.utils;
 
+import beta.com.paginationapi.page.Pagination;
 import beta.com.permissionscreative.commands.ReloadCommands;
 import beta.com.permissionscreative.commands.ReloadItemCommands;
 import beta.com.permissionscreative.commands.SettingsCommands;
@@ -43,12 +44,14 @@ public class CommandsRegister {
     private ReloadItemCommands reloadItemCommands;
     private DatabaseManager databaseManager;
     private InventoryManager inventoryManager;
+    private Pagination pagination;
     private Plugin plugin;
 
-    public CommandsRegister(Config config, LangManager langManager, Plugin plugin,DatabaseManager databaseManager,InventoryManager inventoryManager) {
+    public CommandsRegister(Config config, LangManager langManager, Plugin plugin, DatabaseManager databaseManager, InventoryManager inventoryManager, Pagination pagination) {
         this.config = config;
         this.langManager = langManager;
-        this.settingsCommands = new SettingsCommands(plugin, langManager, config);
+        this.pagination = pagination;
+        this.settingsCommands = new SettingsCommands(plugin, langManager, config,pagination);
         this.reloadCommands = new ReloadCommands(config, langManager);
         this.reloadItemCommands = new ReloadItemCommands(config, langManager,databaseManager,inventoryManager);
         this.plugin = plugin;

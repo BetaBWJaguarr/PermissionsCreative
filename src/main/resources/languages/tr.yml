@@ -13,6 +13,7 @@ events:
   plugins:
     chestshop: "&cYaratıcı modda ChestShop kullanamazsınız."
 discord:
+  not_channel_found: "&cKanal bulunamadı."
   events:
     blockplace:
       message: "adlı oyuncu blok yerleştirmeye çalıştı!"
@@ -47,6 +48,9 @@ discord:
     remove_effects:
       message: "adlı oyuncu etkileri kaldırmaya çalıştı!"
       actions: "Etkileri Kaldırma"
+    chestshop:
+      message: "adlı oyuncu ChestShop eklentisini kullanmaya çalıştı!"
+      actions: "ChestShop Kullanma"
 gui:
   settingsgui:
     success: "&a{settingName} {settingStatus} olarak değiştirildi."

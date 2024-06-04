@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.commands;
 
+import beta.com.paginationapi.page.Pagination;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
 import org.bukkit.ChatColor;
@@ -38,11 +39,13 @@ public class SettingsCommands implements CommandExecutor {
     private LangManager languageManager;
     private Plugin plugin;
     private Config config;
+    private Pagination pagination;
 
-    public SettingsCommands(Plugin plugin, LangManager langManager, Config config) {
+    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, Pagination pagination) {
         this.languageManager = langManager;
         this.plugin = plugin;
         this.config = config;
+        this.pagination = pagination;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class SettingsCommands implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin);
+        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin,pagination);
         settingsGUI.open(plugin, player);
         return true;
     }

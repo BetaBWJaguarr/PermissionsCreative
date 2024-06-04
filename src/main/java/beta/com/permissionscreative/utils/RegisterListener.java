@@ -60,6 +60,6 @@ public class RegisterListener {
         pm.registerEvents(new PotionEvents(config,langManager,eventsManager,discordLogAction,logger),plugin);
         pm.registerEvents(new PlayerInteractEntity(config,langManager,eventsManager,discordLogAction,logger),plugin);
         pm.registerEvents(new CreatureSpawn(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new ChestShopProtection(config,eventsManager),plugin);
+        pm.registerEvents(new ChestShopProtection(config,eventsManager,logger,discordLogAction,langManager),plugin);
     }
 }

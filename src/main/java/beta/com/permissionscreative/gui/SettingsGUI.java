@@ -47,11 +47,9 @@ public class SettingsGUI {
     private Pagination pagination;
     private SettingsGUIListener settingsGUIListener;
     private Navigation navigation;
-    private ItemManager itemManager;
 
-    public SettingsGUI(Config config, LangManager langManager, Plugin plugin) {
-        itemManager = new ItemManager();
-        this.pagination = new Pagination(8, itemManager);
+    public SettingsGUI(Config config, LangManager langManager, Plugin plugin,Pagination pagination) {
+        this.pagination = pagination;
         this.navigation = new Navigation(pagination);
         this.settingsGUIListener = new SettingsGUIListener(this, config, plugin, langManager);
         this.config = config;
@@ -71,6 +69,7 @@ public class SettingsGUI {
                 materials.remove(0);
             }
         }
+
 
         ItemStack item = new ItemStack(material);
         ItemMeta itemMeta = item.getItemMeta();
@@ -108,22 +107,27 @@ public class SettingsGUI {
         inventory = Bukkit.createInventory(null, 9, "Settings");
 
         inventory.clear();
-        itemManager.clearItems();
+        pagination.getItemManager().clearItems();
 
         addItemsToInventory(items);
 
-        int slot = pagination.hasPreviousPage() ? 1 : 0;
-        for (ItemStack item : pagination.getCurrentPageItems()) {
+        UUID playerId = player.getUniqueId();
+
+        int page = pagination.getCurrentPageForPlayer(playerId);
+        pagination.setPageForPlayer(playerId, page);
+
+        int slot = pagination.hasPreviousPage(playerId) ? 1 : 0;
+        for (ItemStack item : pagination.getCurrentPageItems(playerId)) {
             inventory.setItem(slot, item);
             slot++;
         }
 
-        if (pagination.hasNextPage()) {
-            inventory.setItem(8, navigation.createNextPageButton());
+        if (pagination.hasNextPage(playerId)) {
+            inventory.setItem(8, navigation.createNextPageButton(playerId));
         }
 
-        if (pagination.hasPreviousPage()) {
-            inventory.setItem(0, navigation.createPreviousPageButton());
+        if (pagination.hasPreviousPage(playerId)) {
+            inventory.setItem(0, navigation.createPreviousPageButton(playerId));
         }
 
         player.openInventory(inventory);
@@ -131,7 +135,7 @@ public class SettingsGUI {
 
     public void addItemsToInventory(List<ItemStack> items) {
         for (ItemStack item : items) {
-            itemManager.addItem(item);
+            pagination.getItemManager().addItem(item);
         }
     }
 
@@ -149,6 +153,6 @@ public class SettingsGUI {
     }
 
     public ItemManager getitemManager() {
-        return itemManager;
+        return pagination.getItemManager();
     }
 }

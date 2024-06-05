@@ -2,6 +2,8 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
+import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -40,6 +42,16 @@ public class PlayerInteractEntity implements Listener {
 
     private void handleInteractEvent(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
+        World world = eventsManager.checkWorlds();
+        int regions = eventsManager.WorldguardCheck(player);
+
+        if (world != null && !world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
+        if (regions == 0) {
+            return;
+        }
         boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.entity"), "permissionscreative.entity.bypass", "events.entity");
         if (cancel) {
             event.setCancelled(true);

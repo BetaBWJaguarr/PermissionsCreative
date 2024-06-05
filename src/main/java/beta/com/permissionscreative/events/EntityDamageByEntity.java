@@ -2,6 +2,8 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
+import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,6 +32,16 @@ public class EntityDamageByEntity implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
+            World world = eventsManager.checkWorlds();
+            int regions = eventsManager.WorldguardCheck(player);
+
+            if (world != null && !world.isWorldAllowed(player.getWorld())) {
+                return;
+            }
+
+            if (regions == 0) {
+                return;
+            }
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve");
             if (cancel) {
                 event.setCancelled(true);

@@ -2,6 +2,8 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
+import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -31,6 +33,16 @@ public class InventoryOpen implements Listener {
     public void onInventoryOpen(InventoryOpenEvent event) {
         if (event.getPlayer() instanceof Player) {
             Player player = (Player) event.getPlayer();
+            World world = eventsManager.checkWorlds();
+            int regions = eventsManager.WorldguardCheck(player);
+
+            if (world != null && !world.isWorldAllowed(player.getWorld())) {
+                return;
+            }
+
+            if (regions == 0) {
+                return;
+            }
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled");
             if (cancel) {
                 event.setCancelled(true);

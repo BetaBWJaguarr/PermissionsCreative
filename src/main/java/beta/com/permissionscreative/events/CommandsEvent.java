@@ -2,6 +2,8 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
+import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,8 +35,17 @@ public class CommandsEvent implements Listener {
         if (message.startsWith("/permissions-creative")) {
             return;
         }
-
         Player player = event.getPlayer();
+        World world = eventsManager.checkWorlds();
+        int regions = eventsManager.WorldguardCheck(player);
+
+        if (world != null && !world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
+        if (regions == 0) {
+            return;
+        }
         boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.commands"), "permissionscreative.commands.bypass", "events.commands");
         if (shouldCancel) {
             event.setCancelled(true);

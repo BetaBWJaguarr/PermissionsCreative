@@ -2,16 +2,33 @@ package beta.com.permissionscreative.utils;
 
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.worldmanagement.World;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.util.Location;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class EventsManager {
 
     private Config config;
     private LangManager langManager;
     private Plugin plugin;
+    private World world;
 
     public EventsManager(Config config, LangManager langManager, Plugin plugin) {
         this.config = config;
@@ -27,5 +44,36 @@ public class EventsManager {
             return true;
         }
         return false;
+    }
+
+    public World checkWorlds() {
+        List<String> worldNames = config.getConfig().getStringList("worlds.regions");
+        boolean worldsEnabled = config.getConfig().getBoolean("worlds.enabled");
+        if (!worldsEnabled) {
+            return null;
+        }
+        world = new World(plugin.getServer(), worldNames);
+        return world;
+    }
+
+    public int WorldguardCheck(Player player) {
+        Regions regions = new Regions(config, plugin.getServer());
+
+        Location loc = BukkitAdapter.adapt(player.getLocation());
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(loc);
+
+        String playerRegion = null;
+        for (ProtectedRegion region : set) {
+            playerRegion = region.getId();
+            break;
+        }
+
+        if (playerRegion != null && !regions.areRegionsAllowed(Arrays.asList(playerRegion))) {
+            return 0;
+        }
+
+        return 1;
     }
 }

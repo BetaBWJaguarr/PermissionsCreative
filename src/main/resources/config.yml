@@ -31,6 +31,16 @@ logging:
     enabled: true
   file:
     enabled: true
+worlds:
+  enabled: true
+  regions:
+    - 'world_nether'
+    - 'world_the_end'
+world-guard:
+    enabled: true
+    regions:
+      - 'region1'
+      - 'region2'
 inventory:
   adventure: true
   survival: true

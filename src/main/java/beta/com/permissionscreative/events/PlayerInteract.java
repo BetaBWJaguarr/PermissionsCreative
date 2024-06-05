@@ -3,6 +3,8 @@ package beta.com.permissionscreative.events;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.enums.ThrowItems;
 import beta.com.permissionscreative.utils.EventsManager;
+import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,6 +34,16 @@ public class PlayerInteract implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        World world = eventsManager.checkWorlds();
+        int regions = eventsManager.WorldguardCheck(player);
+
+        if (world != null && !world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
+        if (regions == 0) {
+            return;
+        }
         Material itemInHand = player.getItemInHand().getType();
 
         if (player.getGameMode() == GameMode.CREATIVE && ThrowItems.isThrowItem(itemInHand)) {

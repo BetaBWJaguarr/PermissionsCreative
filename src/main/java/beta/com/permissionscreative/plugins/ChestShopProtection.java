@@ -5,8 +5,10 @@ import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.EventsManager;
 import beta.com.permissionscreative.utils.Logger;
+import beta.com.permissionscreative.worldmanagement.World;
 import com.Acrobot.ChestShop.Events.*;
 import com.Acrobot.ChestShop.Events.Protection.BuildPermissionEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -27,6 +29,13 @@ public class ChestShopProtection implements Listener {
 
     @EventHandler
     public void onTransaction(TransactionEvent event) {
+        World world = eventsManager.checkWorlds();
+
+        Player player = event.getClient();
+        if (!world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
         if (eventsManager.checkAndSendMessage(event.getClient(), event.getClient().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
             event.setCancelled(true);
             logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getClient(), discordLogAction);
@@ -35,6 +44,13 @@ public class ChestShopProtection implements Listener {
 
     @EventHandler
     public void onPreTransaction(PreTransactionEvent event) {
+        World world = eventsManager.checkWorlds();
+
+        Player player = event.getClient();
+        if (!world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
         if (eventsManager.checkAndSendMessage(event.getClient(), event.getClient().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
             event.setCancelled(true);
             logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getClient(), discordLogAction);
@@ -43,6 +59,13 @@ public class ChestShopProtection implements Listener {
 
     @EventHandler
     public void onBuildPermission(BuildPermissionEvent event) {
+        World world = eventsManager.checkWorlds();
+
+        Player player = event.getPlayer();
+        if (!world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
         if (eventsManager.checkAndSendMessage(event.getPlayer(), event.getPlayer().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
             event.setCancelled(false);
             event.disallow();
@@ -52,6 +75,13 @@ public class ChestShopProtection implements Listener {
 
     @EventHandler
     public void onShopInfo(ShopInfoEvent event) {
+        World world = eventsManager.checkWorlds();
+
+        Player player = event.getSender();
+        if (!world.isWorldAllowed(player.getWorld())) {
+            return;
+        }
+
         if (eventsManager.checkAndSendMessage(event.getSender(), event.getSender().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
             event.setCancelled(true);
             logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getSender(), discordLogAction);

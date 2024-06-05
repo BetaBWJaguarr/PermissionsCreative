@@ -30,9 +30,14 @@ public final class Main extends JavaPlugin {
     private EventsManager eventsManager;
 
     private DiscordBot discordBot;
+
     private DiscordLogAction discordLogAction;
 
     private Logger logger;
+
+    public Main getInstance() {
+        return Main.this;
+    }
 
     @Override
     public void onEnable() {
@@ -49,12 +54,10 @@ public final class Main extends JavaPlugin {
         langManager = new LangManager(langCodes,this);
         eventsManager = new EventsManager(config,langManager,this);
 
-        if (config.getConfig().getBoolean("logging.discordbot.enabled")) {
-            discordBot = new DiscordBot(config.getConfig().getString("logging.discordbot.token"));
-            discordLogAction = new DiscordLogAction(discordBot,config,langManager);
-        }
 
         logger = new Logger(config,langManager,this);
+
+        reloadConfig();
 
         registerListener = new RegisterListener(this,config,langManager,eventsManager,discordLogAction,logger);
         registerListener.registerEvents();
@@ -75,6 +78,13 @@ public final class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
+    }
+
+    public void reloadConfig() {
+        if (config.getConfig().getBoolean("logging.discordbot.enabled")) {
+            discordBot = new DiscordBot(config.getConfig().getString("logging.discordbot.token"));
+            discordLogAction = new DiscordLogAction(discordBot, config, langManager);
+        }
     }
 
     @Override

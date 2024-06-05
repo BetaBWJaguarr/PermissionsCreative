@@ -33,15 +33,12 @@ public class EntityDamageByEntity implements Listener {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
             World world = eventsManager.checkWorlds();
-            int regions = eventsManager.WorldguardCheck(player);
+            boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-            if (world != null && !world.isWorldAllowed(player.getWorld())) {
+            if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
                 return;
             }
 
-            if (regions == 0) {
-                return;
-            }
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve");
             if (cancel) {
                 event.setCancelled(true);

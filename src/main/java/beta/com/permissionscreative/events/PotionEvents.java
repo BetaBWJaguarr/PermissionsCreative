@@ -47,15 +47,12 @@ public class PotionEvents implements Listener {
             if (potion.getShooter() instanceof Player) {
                 Player player = (Player) potion.getShooter();
                 World world = eventsManager.checkWorlds();
-                int regions = eventsManager.WorldguardCheck(player);
+                boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-                if (world != null && !world.isWorldAllowed(player.getWorld())) {
+                if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
                     return;
                 }
 
-                if (regions == 0) {
-                    return;
-                }
                 boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects");
                 if (cancel) {
                     event.setCancelled(true);

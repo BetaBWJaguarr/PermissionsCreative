@@ -33,15 +33,12 @@ public class PlayerDamage implements Listener {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             Player player = (Player) event.getDamager();
             World world = eventsManager.checkWorlds();
-            int regions = eventsManager.WorldguardCheck(player);
+            boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-            if (world != null && !world.isWorldAllowed(player.getWorld())) {
+            if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
                 return;
             }
 
-            if (regions == 0) {
-                return;
-            }
 
             boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pvp"), "permissionscreative.pvp.bypass", "events.pvp");
             if (cancel) {

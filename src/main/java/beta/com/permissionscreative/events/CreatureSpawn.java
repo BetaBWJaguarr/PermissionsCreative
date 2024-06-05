@@ -33,15 +33,12 @@ public class CreatureSpawn implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         World world = eventsManager.checkWorlds();
-        int regions = eventsManager.WorldguardCheck(player);
+        boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-        if (world != null && !world.isWorldAllowed(player.getWorld())) {
+        if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
             return;
         }
 
-        if (regions == 0) {
-            return;
-        }
         Material itemInHand = player.getItemInHand().getType();
 
         if (itemInHand.name().endsWith("_SPAWN_EGG")) {

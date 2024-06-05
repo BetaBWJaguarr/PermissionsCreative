@@ -56,7 +56,7 @@ public class EventsManager {
         return world;
     }
 
-    public int WorldguardCheck(Player player) {
+    public boolean WorldguardCheck(Player player) {
         Regions regions = new Regions(config, plugin.getServer());
 
         Location loc = BukkitAdapter.adapt(player.getLocation());
@@ -64,16 +64,31 @@ public class EventsManager {
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set = query.getApplicableRegions(loc);
 
-        String playerRegion = null;
         for (ProtectedRegion region : set) {
-            playerRegion = region.getId();
-            break;
+            if (regions.areRegionsAllowed(Arrays.asList(region.getId()))) {
+                return true;
+            }
         }
 
-        if (playerRegion != null && !regions.areRegionsAllowed(Arrays.asList(playerRegion))) {
-            return 0;
+        return false;
+    }
+
+    public boolean checkProtection(Player player, World world, boolean isPlayerInRegion) {
+        boolean worldEnabled = config.getConfig().getBoolean("worlds.enabled");
+        boolean worldGuardEnabled = config.getConfig().getBoolean("world-guard.enabled");
+
+        if (worldEnabled) {
+            if (world == null || !world.isWorldAllowed(player.getWorld())) {
+                return false;
+            }
         }
 
-        return 1;
+        if (worldGuardEnabled) {
+            if (!isPlayerInRegion) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

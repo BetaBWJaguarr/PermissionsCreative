@@ -34,15 +34,12 @@ public class onGameModeChange implements Listener {
     public void onGameModeChanges(PlayerGameModeChangeEvent event) {
         Player player = event.getPlayer();
         World world = eventsManager.checkWorlds();
-        int regions = eventsManager.WorldguardCheck(player);
+        boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-        if (world != null && !world.isWorldAllowed(player.getWorld())) {
+        if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
             return;
         }
 
-        if (regions == 0) {
-            return;
-        }
         GameMode newGameMode = event.getNewGameMode();
 
         if (newGameMode != GameMode.CREATIVE && !player.hasPermission("permissionscreative.gamemode.bypass")) {

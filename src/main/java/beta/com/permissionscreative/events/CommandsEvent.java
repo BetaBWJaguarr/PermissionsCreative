@@ -37,15 +37,12 @@ public class CommandsEvent implements Listener {
         }
         Player player = event.getPlayer();
         World world = eventsManager.checkWorlds();
-        int regions = eventsManager.WorldguardCheck(player);
+        boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-        if (world != null && !world.isWorldAllowed(player.getWorld())) {
+        if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
             return;
         }
 
-        if (regions == 0) {
-            return;
-        }
         boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.commands"), "permissionscreative.commands.bypass", "events.commands");
         if (shouldCancel) {
             event.setCancelled(true);

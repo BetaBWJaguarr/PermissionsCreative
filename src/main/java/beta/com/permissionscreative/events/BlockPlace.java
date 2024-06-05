@@ -32,13 +32,9 @@ public class BlockPlace implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         World world = eventsManager.checkWorlds();
-        int regions = eventsManager.WorldguardCheck(player);
+        boolean isPlayerInRegion = eventsManager.WorldguardCheck(player);
 
-        if (world != null && !world.isWorldAllowed(player.getWorld())) {
-            return;
-        }
-
-        if (regions == 0) {
+        if (!eventsManager.checkProtection(player, world, isPlayerInRegion)) {
             return;
         }
 

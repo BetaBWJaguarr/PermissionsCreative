@@ -8,6 +8,7 @@ import beta.com.permissionscreative.utils.Logger;
 import beta.com.permissionscreative.worldmanagement.World;
 import com.Acrobot.ChestShop.Events.*;
 import com.Acrobot.ChestShop.Events.Protection.BuildPermissionEvent;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,64 +28,39 @@ public class ChestShopProtection implements Listener {
         this.langManager = langManager;
     }
 
-    @EventHandler
-    public void onTransaction(TransactionEvent event) {
+    private void handleEvent(Player player, GameMode gameMode, String permission, String messageKey, String logAction, String logMessage) {
         World world = eventsManager.checkWorlds();
-
-        Player player = event.getClient();
-        if (!world.isWorldAllowed(player.getWorld())) {
+        if (world == null || !world.isWorldAllowed(player.getWorld())) {
             return;
         }
 
-        if (eventsManager.checkAndSendMessage(event.getClient(), event.getClient().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
-            event.setCancelled(true);
-            logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getClient(), discordLogAction);
+        if (eventsManager.checkAndSendMessage(player, gameMode, config.getConfig().getBoolean(permission), "permissionscreative.chestshop.bypass", messageKey)) {
+            logger.log(logAction, logMessage, player, discordLogAction);
         }
+    }
+
+    @EventHandler
+    public void onTransaction(TransactionEvent event) {
+        handleEvent(event.getClient(), event.getClient().getGameMode(), "permissions.plugins.chestshop", "events.plugins.chestshop", "discord.events.chestshop.actions", "discord.events.chestshop.message");
+        event.setCancelled(true);
     }
 
     @EventHandler
     public void onPreTransaction(PreTransactionEvent event) {
-        World world = eventsManager.checkWorlds();
-
-        Player player = event.getClient();
-        if (!world.isWorldAllowed(player.getWorld())) {
-            return;
-        }
-
-        if (eventsManager.checkAndSendMessage(event.getClient(), event.getClient().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
-            event.setCancelled(true);
-            logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getClient(), discordLogAction);
-        }
+        handleEvent(event.getClient(), event.getClient().getGameMode(), "permissions.plugins.chestshop", "events.plugins.chestshop", "discord.events.chestshop.actions", "discord.events.chestshop.message");
+        event.setCancelled(true);
     }
 
     @EventHandler
     public void onBuildPermission(BuildPermissionEvent event) {
-        World world = eventsManager.checkWorlds();
-
-        Player player = event.getPlayer();
-        if (!world.isWorldAllowed(player.getWorld())) {
-            return;
-        }
-
-        if (eventsManager.checkAndSendMessage(event.getPlayer(), event.getPlayer().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
-            event.setCancelled(false);
-            event.disallow();
-            logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getPlayer(), discordLogAction);
-        }
+        handleEvent(event.getPlayer(), event.getPlayer().getGameMode(), "permissions.plugins.chestshop", "events.plugins.chestshop", "discord.events.chestshop.actions", "discord.events.chestshop.message");
+        event.setCancelled(false);
+        event.disallow();
     }
 
     @EventHandler
     public void onShopInfo(ShopInfoEvent event) {
-        World world = eventsManager.checkWorlds();
-
-        Player player = event.getSender();
-        if (!world.isWorldAllowed(player.getWorld())) {
-            return;
-        }
-
-        if (eventsManager.checkAndSendMessage(event.getSender(), event.getSender().getGameMode(), config.getConfig().getBoolean("permissions.plugins.chestshop"), "permissionscreative.chestshop.bypass", "events.plugins.chestshop")) {
-            event.setCancelled(true);
-            logger.log(langManager.getMessage("discord.events.chestshop.actions",config.getConfig().getString("lang")), langManager.getMessage("discord.events.chestshop.message",config.getConfig().getString("lang")), event.getSender(), discordLogAction);
-        }
+        handleEvent(event.getSender(), event.getSender().getGameMode(), "permissions.plugins.chestshop", "events.plugins.chestshop", "discord.events.chestshop.actions", "discord.events.chestshop.message");
+        event.setCancelled(true);
     }
 }

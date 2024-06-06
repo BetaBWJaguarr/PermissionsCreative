@@ -2,7 +2,6 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
-import beta.com.permissionscreative.worldmanagement.Regions;
 import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

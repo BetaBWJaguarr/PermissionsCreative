@@ -69,6 +69,7 @@ commands:
     no_permission: " &cBu komutu kullanmak için yeterli yetki yok."
     player_not_found: " &cOyuncu bulunamadı."
     usage: " &cKullanım: /permissions-creative reload-items <oyuncu>"
+    inventory_not_found: " &cOyuncunun veritabanında kayıtlı envanteri bulunamadı."
 language-error:
   unknown_language: "&cGirdiğiniz dil bilgisi gecersiz."
   unknown_key: " &cGirdiğiniz anahtar bilgisi gecersiz."

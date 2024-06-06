@@ -12,6 +12,26 @@ import java.sql.*;
 import java.util.Base64;
 import java.util.UUID;
 
+/**
+ * The DatabaseManager class is responsible for managing the database operations related to player data.
+ *
+ * It has three private members:
+ * - `connection`: a Connection object to interact with the SQLite database.
+ * - `plugin`: an instance of the Plugin class, used to get the plugin's data folder.
+ * - `config`: an instance of the Config class, used to get configuration details.
+ *
+ * The DatabaseManager class, upon instantiation, initializes its members which include a connection to the SQLite database,
+ * a plugin instance, and a configuration instance. The connect method is then invoked to establish a connection with the
+ * SQLite database and create a table if it doesn’t already exist. The savePlayerData method is designed to insert or replace
+ * a player’s UUID and serialized inventory into the database, ensuring that the player’s data is always up-to-date. To automate
+ * this process, the startSavingTask method initiates a BukkitRunnable task that periodically saves all player inventories at a
+ * specified interval, provided that the configuration allows it. When it comes to retrieving player data, the loadPlayerItems
+ * method comes into play. It fetches a player’s serialized inventory from the database using their UUID and then deserializes it
+ * into an ItemStack array, effectively loading the player’s items. The deserialization process is handled by the deserializeInventory
+ * method, a private helper method that takes a Base64 encoded string and converts it into an ItemStack array. This comprehensive
+ * system ensures efficient and reliable management of player data in the database.
+ */
+
 public class DatabaseManager {
     private Connection connection;
     private Plugin plugin;

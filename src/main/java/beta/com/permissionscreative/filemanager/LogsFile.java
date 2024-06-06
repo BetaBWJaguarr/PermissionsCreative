@@ -4,6 +4,12 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 
+/**
+ * The LogsFile class is part of the `beta.com.permissionscreative.filemanager` package.
+ * It is responsible for managing a log file within the plugin's data folder.
+ * The class provides functionality to write messages to this log file.
+ */
+
 public class LogsFile {
     private final File file;
 

@@ -1,6 +1,5 @@
 package beta.com.permissionscreative.inventorymanager;
 
-
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import org.bukkit.Bukkit;
@@ -14,20 +13,28 @@ import java.util.Base64;
 import java.util.Objects;
 
 public class InventoryManager {
-    private DatabaseManager databaseManager;
-    private Config config;
+    private final DatabaseManager databaseManager;
+    private final Config config;
 
     public InventoryManager(DatabaseManager databaseManager, Config config) {
         this.databaseManager = databaseManager;
         this.config = config;
     }
 
-    public String serializeInventory(ItemStack[] inventory) {
-        YamlConfiguration config = new YamlConfiguration();
+    private String serializeInventory(ItemStack[] inventory) {
+        YamlConfiguration yamlConfig = new YamlConfiguration();
         for (int i = 0; i < inventory.length; i++) {
-            config.set(String.valueOf(i), inventory[i]);
+            yamlConfig.set(String.valueOf(i), inventory[i]);
         }
-        return Base64.getEncoder().encodeToString(config.saveToString().getBytes());
+        return Base64.getEncoder().encodeToString(yamlConfig.saveToString().getBytes());
+    }
+
+    private void saveInventoryToDatabase(Player player, String serializedInventory) {
+        try {
+            databaseManager.savePlayerData(player.getUniqueId().toString(), serializedInventory);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void savePlayerInventory(Player player) {
@@ -39,18 +46,12 @@ public class InventoryManager {
         boolean isEmpty = Arrays.stream(inventory).allMatch(Objects::isNull);
         if (!isEmpty) {
             String serializedInventory = serializeInventory(inventory);
-            try {
-                databaseManager.savePlayerData(player.getUniqueId().toString(), serializedInventory);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            saveInventoryToDatabase(player, serializedInventory);
         }
     }
 
     public void saveAllPlayerInventories() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            savePlayerInventory(player);
-        }
+        Bukkit.getOnlinePlayers().forEach(this::savePlayerInventory);
     }
 
     public void setPlayerInventory(Player player, ItemStack[] items) {

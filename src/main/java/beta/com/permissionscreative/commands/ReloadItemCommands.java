@@ -14,6 +14,26 @@ import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
 
+/**
+ * The ReloadItemCommands class implements the CommandExecutor interface.
+ * It is responsible for reloading items from the database into a player's inventory.
+ *
+ * It has four private members:
+ * - `databaseManager`: an instance of DatabaseManager to interact with the database.
+ * - `inventoryManager`: an instance of InventoryManager to manage the player's inventory.
+ * - `langManager`: an instance of LangManager to handle language-specific messages.
+ * - `config`: an instance of Config to handle the plugin's configuration.
+ *
+ * The class constructor initializes these members.
+ *
+ * The `onCommand` method is overridden from the CommandExecutor interface. It handles the command execution.
+ * It first checks if the sender has the required permission. If not, it sends a no_permission message.
+ * Then, it checks if the correct number of arguments has been provided. If not, it sends a usage message.
+ * It then attempts to get the target player. If the player is not found, it sends a player_not_found message.
+ * If the player is found, it attempts to load the player's items from the database and set the player's inventory.
+ * Finally, it sends an items_reloaded message to the sender.
+ */
+
 public class ReloadItemCommands implements CommandExecutor {
     private DatabaseManager databaseManager;
     private InventoryManager inventoryManager;
@@ -54,6 +74,12 @@ public class ReloadItemCommands implements CommandExecutor {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        if (items == null || items.length == 0) {
+            sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.inventory_not_found", language));
+            return true;
+        }
+
         inventoryManager.setPlayerInventory(targetPlayer, items);
 
         sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.items_reloaded", language) + targetPlayer.getName());

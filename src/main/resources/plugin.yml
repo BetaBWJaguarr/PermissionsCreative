@@ -3,6 +3,8 @@ version: '${project.version}'
 main: beta.com.permissionscreative.Main
 api-version: '1.20'
 authors: [Beta_BWJaguarr]
+softdepend:
+  - WorldGuard
 commands:
   permissions-creative:
     description: Main command for the PermissionsCreative.

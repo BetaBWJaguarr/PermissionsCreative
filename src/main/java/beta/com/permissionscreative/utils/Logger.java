@@ -11,6 +11,21 @@ import org.bukkit.plugin.Plugin;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * The Logger class is responsible for managing logging operations in-game, console, file, and Discord.
+ * This class is instantiated with Config, LangManager, and Plugin objects.
+ *
+ * The 'log' method is the main method that decides which types of logging are enabled and calls the appropriate methods.
+ *
+ * The 'discordbot' method sends the log message to a Discord channel.
+ *
+ * The 'gamechat' method sends the log message to the in-game chat visible to players with the appropriate permissions.
+ *
+ * The 'console' method prints the log message to the server's console.
+ *
+ * The 'file' method writes the log message to a file.
+ */
+
 public class Logger {
     private final Config config;
      private final LangManager langManager;

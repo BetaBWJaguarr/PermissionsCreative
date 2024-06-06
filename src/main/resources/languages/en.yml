@@ -69,6 +69,7 @@ commands:
     no_permission:  " &cYou don't have the permissions to use this command."
     player_not_found: " &cPlayer not found."
     usage: " &cUsage: /permissions-creative reload-items <player>"
+    inventory_not_found: " &cInventory not found in the database."
 language-error:
   unknown_language: "&cPlease specify a valid language."
   unknown_key: "&cPlease specify a valid key."

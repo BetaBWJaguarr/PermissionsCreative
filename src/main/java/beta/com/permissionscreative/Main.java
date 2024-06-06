@@ -47,6 +47,12 @@ public final class Main extends JavaPlugin {
             return;
         }
 
+        if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+            getLogger().severe("Worldguard not found! Disabling plugin...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         config = new Config(this);
         ArrayList<String> langCodes = new ArrayList<>();
         langCodes.add("en");

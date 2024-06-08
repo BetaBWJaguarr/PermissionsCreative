@@ -12,6 +12,15 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
 
+/**
+ * The InventoryManager class is designed to handle the serialization, storage, and retrieval of player inventories within the game.
+ * It provides methods to serialize the inventory into a string format, save it to a database, and restore it to the player as needed.
+ * This class ensures that player inventories are preserved, especially during server stops or restarts, and can be a crucial part of
+ * gameplay mechanics that require inventory manipulation. It works closely with the DatabaseManager to handle data persistence and
+ * uses the server's configuration settings to determine when and how inventories should be saved or bypassed.
+ */
+
+
 public class InventoryManager {
     private final DatabaseManager databaseManager;
     private final Config config;

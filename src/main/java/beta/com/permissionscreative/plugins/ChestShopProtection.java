@@ -13,6 +13,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+/**
+ * This class provides protection mechanisms for ChestShop transactions within the game.
+ * It utilizes event handlers to intercept various ChestShop events such as transactions,
+ * pre-transactions, build permissions, and shop information requests. The class ensures
+ * that these events are processed according to the server's configurations and permissions,
+ * logging actions to Discord if necessary. It leverages an integrated language manager for
+ * localized messages, a configuration manager to handle server-specific settings, and an
+ * events manager to check world-specific conditions and permissions. The goal is to provide
+ * a seamless and secure shopping experience for players, preventing unauthorized actions and
+ * ensuring compliance with the server's rules.
+ */
+
+
 public class ChestShopProtection implements Listener {
     private final Config config;
     private final EventsManager eventsManager;

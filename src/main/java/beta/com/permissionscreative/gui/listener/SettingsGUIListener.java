@@ -17,19 +17,24 @@ import org.bukkit.plugin.Plugin;
 import java.io.IOException;
 
 /**
- * The SettingsGUIListener class implements the Listener interface and is responsible for handling user interactions with the SettingsGUI.
+ * The SettingsGUIListener class implements the Listener interface and is responsible for handling user interactions with the
+ * SettingsGUI.
  *
  * This class has two main methods:
  *
  * 1. onInventoryClick(InventoryClickEvent event): This method is triggered when a player clicks on an item in the inventory.
  *    - It first checks if the clicked inventory is the "Settings" GUI.
- *    - If the clicked item is "Next Page" or "Previous Page", it navigates to the next or previous page of the settings GUI using the PaginationListener.
- *    - If the clicked item is a setting, it toggles the setting's state. It does this by getting the setting name and current state from the item's display name, then updating the corresponding setting in the config. It then saves the updated config and sends a success message to the player.
+ *    - If the clicked item is "Next Page" or "Previous Page", it navigates to the next or previous page of the settings GUI
+ *    using the PaginationListener.
+ *    - If the clicked item is a setting, it toggles the setting's state. It does this by getting the setting name and current
+ *    state from the item's display name, then updating the corresponding setting in the config. It then saves the updated config
+ *    and sends a success message to the player.
  *    - If the clicked item is not a setting or navigation item, it does nothing.
  *
  * 2. onInventoryClose(InventoryCloseEvent event): This method is triggered when a player closes the inventory.
  *    - It checks if the closed inventory is the "Settings" GUI.
- *    - If it is, it updates the GUI to reflect the current state of the settings. This is done by calling the GUI method of the SettingsGUI instance.
+ *    - If it is, it updates the GUI to reflect the current state of the settings. This is done by calling the GUI method of
+ *    the SettingsGUI instance.
  *
  * The class also has a constructor, SettingsGUIListener(SettingsGUI settingsGUI, Config config, Plugin plugin, LangManager langManager), which initializes the SettingsGUI, Config, Plugin, and LangManager instances used by the class, and creates a new PaginationListener for the SettingsGUI's Pagination.
  *

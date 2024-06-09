@@ -20,6 +20,17 @@ permissions:
   spawnegg: true
   plugins:
     chestshop: true
+list:
+  mode:
+    build: blacklist
+    throw: blacklist
+    drop: blacklist
+  build:
+    - ''
+  throw:
+    - ''
+  drop:
+    - ''
 logging:
   discordbot:
     enabled: false

@@ -39,7 +39,8 @@ public class DropItem implements Listener {
         }
 
 
-        boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.drop"), "permissionscreative.drop.bypass", "events.dropitem");
+        String item = event.getItemDrop().getItemStack().getType().toString();
+        boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.drop"), "permissionscreative.drop.bypass", "events.dropitem","drop",item);
         if (cancel) {
             event.setCancelled(true);
             logger.log("discord.events.drop.actions", "discord.events.drop.message", player, discordLogAction);

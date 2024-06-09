@@ -39,7 +39,7 @@ public class EntityDamageByEntity implements Listener {
                 return;
             }
 
-            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve");
+            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pve"), "permissionscreative.pve.bypass", "events.pve","","");
             if (cancel) {
                 event.setCancelled(true);
                 logger.log("discord.events.pve.actions", "discord.events.pve.message", player, discordLogAction);

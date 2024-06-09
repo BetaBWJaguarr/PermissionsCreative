@@ -42,7 +42,7 @@ public class CreatureSpawn implements Listener {
         Material itemInHand = player.getItemInHand().getType();
 
         if (itemInHand.name().endsWith("_SPAWN_EGG")) {
-            boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.spawnegg"), "permissionscreative.spawnegg.bypass", "events.spawnegg");
+            boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.spawnegg"), "permissionscreative.spawnegg.bypass", "events.spawnegg","","");
             if (shouldCancel) {
                 event.setCancelled(true);
                 logger.log("discord.events.spawnegg.actions", "discord.events.spawnegg.message", player, discordLogAction);

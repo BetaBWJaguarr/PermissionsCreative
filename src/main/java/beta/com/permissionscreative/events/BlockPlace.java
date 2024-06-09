@@ -2,7 +2,6 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.utils.EventsManager;
-import beta.com.permissionscreative.worldmanagement.Regions;
 import beta.com.permissionscreative.worldmanagement.World;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -38,7 +37,8 @@ public class BlockPlace implements Listener {
             return;
         }
 
-        boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.build"), "permissionscreative.build.bypass", "events.blockplace");
+        String item = event.getBlock().getType().toString();
+        boolean shouldCancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.build"), "permissionscreative.build.bypass", "events.blockplace", "build", item);
         if (shouldCancel) {
             event.setCancelled(true);
             logger.log("discord.events.blockplace.actions", "discord.events.blockplace.message", player, discordLogAction);

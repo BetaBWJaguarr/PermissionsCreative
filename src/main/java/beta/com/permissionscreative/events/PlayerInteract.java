@@ -42,10 +42,11 @@ public class PlayerInteract implements Listener {
         }
 
         Material itemInHand = player.getItemInHand().getType();
+        String items = itemInHand.toString();
 
         if (player.getGameMode() == GameMode.CREATIVE && ThrowItems.isThrowItem(itemInHand)) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-                boolean shouldcancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.throw"), "permissionscreative.throw.bypass", "events.throw");
+                boolean shouldcancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.throw"), "permissionscreative.throw.bypass", "events.throw","throw",items);
                 if (shouldcancel) {
                     event.setCancelled(true);
                     logger.log("discord.events.throw.actions", "discord.events.throw.message", player, discordLogAction);

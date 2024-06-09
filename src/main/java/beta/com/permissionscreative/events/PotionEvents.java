@@ -52,7 +52,7 @@ public class PotionEvents implements Listener {
                     return;
                 }
 
-                boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects");
+                boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.remove_effects"), "permissionscreative.removeeffects.bypass", "events.remove-effects","","");
                 if (cancel) {
                     event.setCancelled(true);
                     logger.log("discord.events.remove_effects.actions", "discord.events.remove_effects.message", player, discordLogAction);

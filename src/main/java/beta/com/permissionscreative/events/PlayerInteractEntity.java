@@ -49,7 +49,7 @@ public class PlayerInteractEntity implements Listener {
             return;
         }
 
-        boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.entity"), "permissionscreative.entity.bypass", "events.entity");
+        boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.entity"), "permissionscreative.entity.bypass", "events.entity","","");
         if (cancel) {
             event.setCancelled(true);
             logger.log("discord.events.entity.actions", "discord.events.entity.message", player, discordLogAction);

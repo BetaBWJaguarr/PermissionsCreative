@@ -40,7 +40,7 @@ public class InventoryOpen implements Listener {
                 return;
             }
 
-            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled");
+            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.gui"), "permissionscreative.bypass.gui", "events.gui-disabled","","");
             if (cancel) {
                 event.setCancelled(true);
                 logger.log("discord.events.gui.actions", "discord.events.gui.message", player, discordLogAction);

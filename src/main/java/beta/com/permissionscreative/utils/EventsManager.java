@@ -48,14 +48,49 @@ public class EventsManager {
         this.plugin = plugin;
     }
 
-    public boolean checkAndSendMessage(Player player, GameMode gameMode, boolean permissionEnabled, String permission, String messageKey) {
+    public boolean checkAndSendMessage(Player player, GameMode gameMode, boolean permissionEnabled, String permission, String messageKey, String action, String item) {
         if (player.getGameMode() != gameMode || !permissionEnabled || player.hasPermission(permission)) {
             return false;
         }
-        String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
-        String message = langManager.getMessage(messageKey, config.getConfig().getString("lang"));
-        player.sendMessage(prefix + " " + message);
-        return true;
+
+        String mode = config.getConfig().getString("list.mode." + action);
+        List<String> items = config.getConfig().getStringList("list." + action);
+
+        boolean result;
+        if (items.isEmpty() || items.contains("")) {
+            result = true;
+        } else {
+            result = false;
+            for (String listItem : items) {
+                if (listItem.contains("_")) {
+                    String listItemSuffix = listItem.substring(listItem.lastIndexOf("_"));
+                    String itemSuffix = item.contains("_") ? item.substring(item.lastIndexOf("_")) : "";
+                    if (mode.equals("whitelist")) {
+                        result = listItemSuffix.equals(itemSuffix);
+                    } else if (mode.equals("blacklist")) {
+                        result = !listItemSuffix.equals(itemSuffix);
+                    }
+                } else {
+                    if (mode.equals("whitelist")) {
+                        result = listItem.equals(item);
+                    } else if (mode.equals("blacklist")) {
+                        result = !listItem.equals(item);
+                    }
+                }
+
+                if (result) {
+                    break;
+                }
+            }
+        }
+
+        if (result) {
+            String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+            String message = langManager.getMessage(messageKey, config.getConfig().getString("lang"));
+            player.sendMessage(prefix + " " + message);
+        }
+
+        return result;
     }
 
     public World checkWorlds() {

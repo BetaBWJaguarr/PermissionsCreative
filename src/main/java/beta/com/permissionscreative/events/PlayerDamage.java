@@ -40,7 +40,7 @@ public class PlayerDamage implements Listener {
             }
 
 
-            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pvp"), "permissionscreative.pvp.bypass", "events.pvp");
+            boolean cancel = eventsManager.checkAndSendMessage(player, GameMode.CREATIVE, config.getConfig().getBoolean("permissions.pvp"), "permissionscreative.pvp.bypass", "events.pvp","","");
             if (cancel) {
                 event.setCancelled(true);
                 logger.log("discord.events.pvp.actions", "discord.events.pvp.message", player, discordLogAction);

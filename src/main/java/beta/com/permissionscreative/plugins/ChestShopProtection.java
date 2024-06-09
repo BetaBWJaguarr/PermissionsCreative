@@ -47,7 +47,7 @@ public class ChestShopProtection implements Listener {
             return;
         }
 
-        if (eventsManager.checkAndSendMessage(player, gameMode, config.getConfig().getBoolean(permission), "permissionscreative.chestshop.bypass", messageKey)) {
+        if (eventsManager.checkAndSendMessage(player, gameMode, config.getConfig().getBoolean(permission), "permissionscreative.chestshop.bypass", messageKey,"","")) {
             logger.log(logAction, logMessage, player, discordLogAction);
         }
     }

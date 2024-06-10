@@ -44,22 +44,14 @@ public class DatabaseManager {
 
     public void connect() throws SQLException {
         connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/database.db");
-        try (PreparedStatement statement = connection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS player_data (" +
-                        "uuid TEXT PRIMARY KEY," +
-                        "inventory TEXT" +
-                        ")")) {
-            statement.executeUpdate();
-        }
+        connection.prepareStatement("CREATE TABLE IF NOT EXISTS player_data (uuid TEXT PRIMARY KEY, inventory TEXT)").executeUpdate();
     }
 
     public void savePlayerData(String uuid, String inventory) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT OR REPLACE INTO player_data (uuid, inventory) VALUES (?, ?)")) {
-            statement.setString(1, uuid);
-            statement.setString(2, inventory);
-            statement.executeUpdate();
-        }
+        PreparedStatement statement = connection.prepareStatement("INSERT OR REPLACE INTO player_data (uuid, inventory) VALUES (?, ?)");
+        statement.setString(1, uuid);
+        statement.setString(2, inventory);
+        statement.executeUpdate();
     }
 
     public void startSavingTask(InventoryManager inventoryManager) {
@@ -70,21 +62,14 @@ public class DatabaseManager {
                     inventoryManager.saveAllPlayerInventories();
                 }
             }.runTaskTimer(plugin, 0, config.getConfig().getLong("inventory-settings.save-interval") * 20);
-            //config.getConfig().getLong("save-interval")
         }
     }
 
     public ItemStack[] loadPlayerItems(UUID playerUUID) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT inventory FROM player_data WHERE uuid = ?")) {
-            statement.setString(1, playerUUID.toString());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                String serializedInventory = resultSet.getString("inventory");
-                return deserializeInventory(serializedInventory);
-            }
-        }
-        return null;
+        PreparedStatement statement = connection.prepareStatement("SELECT inventory FROM player_data WHERE uuid = ?");
+        statement.setString(1, playerUUID.toString());
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next() ? deserializeInventory(resultSet.getString("inventory")) : null;
     }
 
     private ItemStack[] deserializeInventory(String serializedInventory) {

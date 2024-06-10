@@ -33,14 +33,12 @@ public class ChestShopProtection implements Listener {
     private final EventsManager eventsManager;
     private final Logger logger;
     private final DiscordLogAction discordLogAction;
-    private final LangManager langManager;
 
-    public ChestShopProtection(Config config, EventsManager eventsManager, Logger logger, DiscordLogAction discordLogAction, LangManager langManager) {
+    public ChestShopProtection(Config config, EventsManager eventsManager, Logger logger, DiscordLogAction discordLogAction) {
         this.config = config;
         this.eventsManager = eventsManager;
         this.logger = logger;
         this.discordLogAction = discordLogAction;
-        this.langManager = langManager;
     }
 
     private void handleEvent(Player player, GameMode gameMode, String permission, String messageKey, String logAction, String logMessage) {

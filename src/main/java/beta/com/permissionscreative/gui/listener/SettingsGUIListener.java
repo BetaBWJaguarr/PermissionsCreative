@@ -5,6 +5,7 @@ import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The SettingsGUIListener class implements the Listener interface and is responsible for handling user interactions with the
@@ -51,6 +54,7 @@ public class SettingsGUIListener implements Listener {
     private LangManager langManager;
     private PaginationListener paginationListener;
 
+
     public SettingsGUIListener(SettingsGUI settingsGUI, Config config, Plugin plugin, LangManager langManager) {
         this.settingsGUI = settingsGUI;
         this.config = config;
@@ -73,6 +77,10 @@ public class SettingsGUIListener implements Listener {
         ItemStack clickedItem = event.getCurrentItem();
 
         if (clickedItem == null) {
+            return;
+        }
+
+        if (clickedItem.getType() == Material.COMPASS) {
             return;
         }
 
@@ -118,13 +126,6 @@ public class SettingsGUIListener implements Listener {
             }
 
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getInventory().equals(settingsGUI.getInventory())) {
-            settingsGUI.GUI((Player) event.getPlayer()); // Update the inventory here
         }
     }
 }

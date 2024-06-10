@@ -2,6 +2,7 @@ package beta.com.permissionscreative;
 
 import beta.com.paginationapi.itemmanager.ItemManager;
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.discord.DiscordBot;
@@ -41,18 +42,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (getServer().getPluginManager().getPlugin("PaginationAPI") == null) {
-            getLogger().severe("PaginationAPI not found! Disabling plugin...");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
-        if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
-            getLogger().severe("Worldguard not found! Disabling plugin...");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
+        checkDependencies();
         config = new Config(this);
         ArrayList<String> langCodes = new ArrayList<>();
         langCodes.add("en");
@@ -73,8 +63,11 @@ public final class Main extends JavaPlugin {
 
         ItemManager itemManager = new ItemManager();
         Pagination pagination = new Pagination(8,itemManager);
+        SearchFunction searchFunction = new SearchFunction(pagination,itemManager);
+        getServer().getPluginManager().registerEvents(searchFunction, this);
 
-        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,pagination);
+
+        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,pagination,searchFunction);
         commandsRegister.registerCommands();
 
         try {
@@ -90,6 +83,18 @@ public final class Main extends JavaPlugin {
         if (config.getConfig().getBoolean("logging.discordbot.enabled")) {
             discordBot = new DiscordBot(config.getConfig().getString("logging.discordbot.token"));
             discordLogAction = new DiscordLogAction(discordBot, config, langManager);
+        }
+    }
+
+    private void checkDependencies() {
+        String[] plugins = {"PaginationAPI", "WorldGuard", "Vault"};
+
+        for (String plugin : plugins) {
+            if (getServer().getPluginManager().getPlugin(plugin) == null) {
+                getLogger().severe(plugin + " not found! Disabling plugin...");
+                getServer().getPluginManager().disablePlugin(this);
+                return;
+            }
         }
     }
 

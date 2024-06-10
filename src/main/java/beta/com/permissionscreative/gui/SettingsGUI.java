@@ -3,6 +3,7 @@ package beta.com.permissionscreative.gui;
 import beta.com.paginationapi.itemmanager.ItemManager;
 import beta.com.paginationapi.navigation.Navigation;
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.listener.SettingsGUIListener;
 import beta.com.permissionscreative.languagemanager.LangManager;
@@ -47,13 +48,15 @@ public class SettingsGUI {
     private Pagination pagination;
     private SettingsGUIListener settingsGUIListener;
     private Navigation navigation;
+    private SearchFunction searchFunction;
 
-    public SettingsGUI(Config config, LangManager langManager, Plugin plugin,Pagination pagination) {
+    public SettingsGUI(Config config, LangManager langManager, Plugin plugin,Pagination pagination,SearchFunction searchFunction) {
         this.pagination = pagination;
         this.navigation = new Navigation(pagination);
         this.settingsGUIListener = new SettingsGUIListener(this, config, plugin, langManager);
         this.config = config;
         this.langManager = langManager;
+        this.searchFunction = searchFunction;
     }
 
 
@@ -104,12 +107,16 @@ public class SettingsGUI {
 
 
 
-        inventory = Bukkit.createInventory(null, 9, "Settings");
+        inventory = Bukkit.createInventory(null, 18, "Settings");
+
 
         inventory.clear();
         pagination.getItemManager().clearItems();
 
         addItemsToInventory(items);
+
+        inventory.setItem(9, searchFunction.createSearchButton());
+
 
         UUID playerId = player.getUniqueId();
 

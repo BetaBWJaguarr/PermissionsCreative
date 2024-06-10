@@ -50,16 +50,16 @@ public class RegisterListener {
     public void registerEvents() {
         PluginManager pm = plugin.getServer().getPluginManager();
         pm.registerEvents(new BlockPlace(config,langManager,eventsManager,discordLogAction,logger), plugin);
-        pm.registerEvents(new DropItem(config,langManager,eventsManager,discordLogAction,logger), plugin);
-        pm.registerEvents(new CommandsEvent(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new PlayerDamage(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new PlayerInteract(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new onGameModeChange(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new InventoryOpen(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new EntityDamageByEntity(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new PotionEvents(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new PlayerInteractEntity(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new CreatureSpawn(config,langManager,eventsManager,discordLogAction,logger),plugin);
-        pm.registerEvents(new ChestShopProtection(config,eventsManager,logger,discordLogAction,langManager),plugin);
+        pm.registerEvents(new DropItem(config,eventsManager,discordLogAction,logger), plugin);
+        pm.registerEvents(new CommandsEvent(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PlayerDamage(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PlayerInteract(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new onGameModeChange(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new InventoryOpen(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new EntityDamageByEntity(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PotionEvents(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new PlayerInteractEntity(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new CreatureSpawn(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new ChestShopProtection(config,eventsManager,logger,discordLogAction),plugin);
     }
 }

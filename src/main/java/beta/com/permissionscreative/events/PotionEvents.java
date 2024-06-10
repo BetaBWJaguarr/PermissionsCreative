@@ -17,14 +17,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class PotionEvents implements Listener {
     private final Config config;
-    private final LangManager langManager;
     private final EventsManager eventsManager;
     private final DiscordLogAction discordLogAction;
     private final Logger logger;
 
-    public PotionEvents(Config config, LangManager langManager, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
+    public PotionEvents(Config config, EventsManager eventsManager, DiscordLogAction discordLogAction, Logger logger) {
         this.config = config;
-        this.langManager = langManager;
         this.eventsManager = eventsManager;
         this.discordLogAction = discordLogAction;
         this.logger = logger;

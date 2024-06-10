@@ -1,6 +1,7 @@
 package beta.com.permissionscreative.commands;
 
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
@@ -39,12 +40,14 @@ public class SettingsCommands implements CommandExecutor {
     private Plugin plugin;
     private Config config;
     private Pagination pagination;
+    private SearchFunction searchFunction;
 
-    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, Pagination pagination) {
+    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, Pagination pagination,SearchFunction searchFunction) {
         this.languageManager = langManager;
         this.plugin = plugin;
         this.config = config;
         this.pagination = pagination;
+        this.searchFunction = searchFunction;
     }
 
     @Override
@@ -62,7 +65,7 @@ public class SettingsCommands implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin,pagination);
+        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin,pagination,searchFunction);
         settingsGUI.open(plugin, player);
         return true;
     }

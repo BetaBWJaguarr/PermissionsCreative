@@ -2,7 +2,10 @@ package beta.com.permissionscreative.filemanager;
 
 import org.bukkit.plugin.Plugin;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * The LogsFile class is part of the `beta.com.permissionscreative.filemanager` package.

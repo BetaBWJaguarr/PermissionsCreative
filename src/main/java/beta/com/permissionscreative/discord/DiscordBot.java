@@ -1,7 +1,7 @@
 package beta.com.permissionscreative.discord;
 
-import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 
 /**
  * The DiscordBot class is responsible for interacting with the Discord API.

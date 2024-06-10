@@ -1,18 +1,16 @@
 package beta.com.permissionscreative.events;
 
+import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
+import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.EventsManager;
-import beta.com.permissionscreative.worldmanagement.Regions;
+import beta.com.permissionscreative.utils.Logger;
 import beta.com.permissionscreative.worldmanagement.World;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import beta.com.permissionscreative.configuration.Config;
-import beta.com.permissionscreative.languagemanager.LangManager;
-import beta.com.permissionscreative.utils.Logger;
 
 public class InventoryOpen implements Listener {
     private final Config config;

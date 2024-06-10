@@ -1,11 +1,11 @@
 package beta.com.permissionscreative.commands;
 
+import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import beta.com.permissionscreative.configuration.Config;
 
 /**
  * The ReloadCommands class implements the CommandExecutor interface and is responsible for handling

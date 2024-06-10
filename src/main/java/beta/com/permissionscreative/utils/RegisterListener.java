@@ -1,8 +1,8 @@
 package beta.com.permissionscreative.utils;
 
+import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.events.*;
-import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.plugins.ChestShopProtection;
 import org.bukkit.plugin.PluginManager;

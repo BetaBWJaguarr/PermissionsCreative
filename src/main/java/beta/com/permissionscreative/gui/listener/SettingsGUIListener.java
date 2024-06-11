@@ -16,8 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
 
 /**
  * The SettingsGUIListener class implements the Listener interface and is responsible for handling user interactions with the
@@ -60,7 +59,7 @@ public class SettingsGUIListener implements Listener {
         this.config = config;
         this.plugin = plugin;
         this.langManager = langManager;
-        this.paginationListener = new PaginationListener(settingsGUI.getPagination(),settingsGUI.getitemManager());
+        this.paginationListener = new PaginationListener(settingsGUI.getPagination(), settingsGUI.getitemManager());
     }
 
     @EventHandler
@@ -126,6 +125,19 @@ public class SettingsGUIListener implements Listener {
             }
 
             event.setCancelled(true);
+        }
+    }
+
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (event.getView().getTitle().equals("Settings")) {
+            Player player = (Player) event.getPlayer();
+            UUID playerId = player.getUniqueId();
+            boolean pageMemory = config.getConfig().getBoolean("gui.page_memory");
+            if (!pageMemory) {
+                settingsGUI.getPagination().rememberPages(playerId, false);
+            }
         }
     }
 }

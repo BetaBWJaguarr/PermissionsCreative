@@ -70,6 +70,13 @@ commands:
     player_not_found: " &cOyuncu bulunamadı."
     usage: " &cKullanım: /permissions-creative reload-items <oyuncu>"
     inventory_not_found: " &cOyuncunun veritabanında kayıtlı envanteri bulunamadı."
+  delete-items:
+    no_permission: " &cBu komutu kullanmak için yeterli yetki yok."
+    player_not_found: " &cOyuncu bulunamadı."
+    player_data_deleted: " &aOyuncu verileri silindi."
+    all_data_deleted: " &aTüm oyuncu verileri silindi."
+    error: " &cBir hata oluştu."
+    not_found_data: " &cVeri bulunamadı."
 language-error:
   unknown_language: "&cGirdiğiniz dil bilgisi gecersiz."
   unknown_key: " &cGirdiğiniz anahtar bilgisi gecersiz."

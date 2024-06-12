@@ -70,6 +70,13 @@ commands:
     player_not_found: " &cPlayer not found."
     usage: " &cUsage: /permissions-creative reload-items <player>"
     inventory_not_found: " &cInventory not found in the database."
+  delete-items:
+    no_permission: " &cYou don't have the permissions to use this command."
+    player_not_found: " &cPlayer not found."
+    player_data_deleted: " &aPlayer data deleted."
+    all_data_deleted: " &aAll player data deleted."
+    error: " &cAn error occurred while deleting the player data."
+    not_found_data: " &cData not found."
 language-error:
   unknown_language: "&cPlease specify a valid language."
   unknown_key: "&cPlease specify a valid key."

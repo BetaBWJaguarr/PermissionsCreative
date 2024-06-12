@@ -2,6 +2,7 @@ package beta.com.permissionscreative.utils;
 
 import beta.com.paginationapi.page.Pagination;
 import beta.com.paginationapi.search.SearchFunction;
+import beta.com.permissionscreative.commands.DeleteItemAllCommands;
 import beta.com.permissionscreative.commands.ReloadCommands;
 import beta.com.permissionscreative.commands.ReloadItemCommands;
 import beta.com.permissionscreative.commands.SettingsCommands;
@@ -48,6 +49,7 @@ public class CommandsRegister {
     private Pagination pagination;
     private Plugin plugin;
     private SearchFunction searchFunction;
+    private DeleteItemAllCommands deleteItemAllCommands;
 
     public CommandsRegister(Config config, LangManager langManager, Plugin plugin, DatabaseManager databaseManager, InventoryManager inventoryManager, Pagination pagination,SearchFunction searchFunction) {
         this.config = config;
@@ -57,6 +59,7 @@ public class CommandsRegister {
         this.settingsCommands = new SettingsCommands(plugin, langManager, config,pagination,searchFunction);
         this.reloadCommands = new ReloadCommands(config, langManager);
         this.reloadItemCommands = new ReloadItemCommands(config, langManager,databaseManager,inventoryManager);
+        this.deleteItemAllCommands = new DeleteItemAllCommands(databaseManager,langManager,config);
         this.plugin = plugin;
     }
 
@@ -83,6 +86,9 @@ public class CommandsRegister {
                 break;
             case "reload-items":
                 reloadItemCommands.onCommand(sender, command, label, args);
+                break;
+            case "delete-inventory-all":
+                deleteItemAllCommands.onCommand(sender, command, label, args);
                 break;
             default:
                 sender.sendMessage(prefix + langManager.getMessage("commands.permissions-creative.invalid_subcommand", config.getConfig().getString("lang")));

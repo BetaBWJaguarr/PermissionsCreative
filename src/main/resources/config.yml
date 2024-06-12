@@ -1,5 +1,12 @@
 prefix: '&7[&6PermissionsCreative&7]'
 lang: 'tr'
+DataSource:
+  type: 'MYSQL'
+  host: 'localhost'
+  port: '3306'
+  database: 'playerdatas'
+  username: 'tunaocak'
+  password: 'tunaocak123'
 inventory-settings:
   save-inventory: true
   save-interval: 5

@@ -43,15 +43,70 @@ public class DatabaseManager {
     }
 
     public void connect() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/database.db");
-        connection.prepareStatement("CREATE TABLE IF NOT EXISTS player_data (uuid TEXT PRIMARY KEY, inventory TEXT)").executeUpdate();
+        String type = config.getConfig().getString("DataSource.type");
+        if (type.equalsIgnoreCase("MYSQL")) {
+            String host = config.getConfig().getString("DataSource.host");
+            String port = config.getConfig().getString("DataSource.port");
+            String database = config.getConfig().getString("DataSource.database");
+            String username = config.getConfig().getString("DataSource.username");
+            String password = config.getConfig().getString("DataSource.password");
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS player_data (uuid VARCHAR(36) UNIQUE, inventory TEXT, PRIMARY KEY(uuid))").executeUpdate();
+        } else {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getDataFolder() + "/database.db");
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS player_data (uuid TEXT PRIMARY KEY, inventory TEXT)").executeUpdate();
+        }
     }
 
     public void savePlayerData(String uuid, String inventory) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT OR REPLACE INTO player_data (uuid, inventory) VALUES (?, ?)");
-        statement.setString(1, uuid);
-        statement.setString(2, inventory);
+        String type = config.getConfig().getString("DataSource.type");
+        PreparedStatement statement;
+        if (type.equalsIgnoreCase("MYSQL")) {
+            statement = connection.prepareStatement(
+                    "INSERT INTO player_data (uuid, inventory) VALUES (?, ?) ON DUPLICATE KEY UPDATE inventory = ?"
+            );
+            statement.setString(1, uuid);
+            statement.setString(2, inventory);
+            statement.setString(3, inventory); // for the UPDATE part
+        } else {
+            statement = connection.prepareStatement(
+                    "INSERT OR REPLACE INTO player_data (uuid, inventory) VALUES (?, ?)"
+            );
+            statement.setString(1, uuid);
+            statement.setString(2, inventory);
+        }
         statement.executeUpdate();
+    }
+
+    public boolean deletePlayerData(String uuid) throws SQLException {
+        String query;
+        if (uuid == null) {
+            query = "SELECT COUNT(*) AS total FROM player_data";
+        } else {
+            query = "SELECT COUNT(*) AS total FROM player_data WHERE uuid = ?";
+        }
+
+        PreparedStatement countStatement = connection.prepareStatement(query);
+        if (uuid != null) {
+            countStatement.setString(1, uuid);
+        }
+        ResultSet resultSet = countStatement.executeQuery();
+
+        if (resultSet.next() && resultSet.getInt("total") > 0) {
+            if (uuid == null) {
+                query = "DELETE FROM player_data";
+            } else {
+                query = "DELETE FROM player_data WHERE uuid = ?";
+            }
+
+            PreparedStatement deleteStatement = connection.prepareStatement(query);
+            if (uuid != null) {
+                deleteStatement.setString(1, uuid);
+            }
+            deleteStatement.executeUpdate();
+            return true;
+        }
+        return false;
     }
 
     public void startSavingTask(InventoryManager inventoryManager) {

@@ -5,6 +5,7 @@ api-version: '1.20'
 authors: [Beta_BWJaguarr]
 softdepend:
   - WorldGuard
+  - ChestShop
 commands:
   permissions-creative:
     description: Main command for the PermissionsCreative.

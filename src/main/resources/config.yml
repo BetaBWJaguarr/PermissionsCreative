@@ -26,6 +26,8 @@ permissions:
   remove_effects: true
   entity: true
   spawnegg: true
+  fly: true
+  break: true
   plugins:
     chestshop: true
 list:
@@ -33,12 +35,15 @@ list:
     build: blacklist
     throw: blacklist
     drop: blacklist
+    break: blacklist
   build:
     - ''
   throw:
     - ''
   drop:
     - ''
+  break:
+    - 'GRASS_BLOCK'
 logging:
   discordbot:
     enabled: false
@@ -53,10 +58,11 @@ logging:
 worlds:
   enabled: true
   regions:
+    - 'world'
     - 'world_nether'
     - 'world_the_end'
 world-guard:
-  enabled: true
+  enabled: false
   regions:
     - 'region1'
     - 'region2'

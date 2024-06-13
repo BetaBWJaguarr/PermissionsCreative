@@ -56,30 +56,42 @@ public class EventsManager {
         String mode = config.getConfig().getString("list.mode." + action);
         List<String> items = config.getConfig().getStringList("list." + action);
 
-        boolean result;
+        boolean result = false;
         if (items.isEmpty() || items.contains("")) {
             result = true;
         } else {
-            result = false;
             for (String listItem : items) {
-                if (listItem.contains("_")) {
-                    String listItemSuffix = listItem.substring(listItem.lastIndexOf("_"));
-                    String itemSuffix = item.contains("_") ? item.substring(item.lastIndexOf("_")) : "";
+                if (listItem.contains("*_")) {
+                    String listItemSuffix = listItem.substring(listItem.lastIndexOf("_") + 1);
+                    String itemSuffix = item.contains("_") ? item.substring(item.lastIndexOf("_") + 1) : "";
+
                     if (mode.equals("whitelist")) {
-                        result = listItemSuffix.equals(itemSuffix);
+                        if (listItemSuffix.equals(itemSuffix)) {
+                            result = false;
+                            break;
+                        } else {
+                            result = true;
+                        }
                     } else if (mode.equals("blacklist")) {
-                        result = !listItemSuffix.equals(itemSuffix);
+                        if (listItemSuffix.equals(itemSuffix)) {
+                            result = true;
+                            break;
+                        }
                     }
                 } else {
                     if (mode.equals("whitelist")) {
-                        result = listItem.equals(item);
+                        if (listItem.equals(item)) {
+                            result = false;
+                            break;
+                        } else {
+                            result = true;
+                        }
                     } else if (mode.equals("blacklist")) {
-                        result = !listItem.equals(item);
+                        if (listItem.equals(item)) {
+                            result = true;
+                            break;
+                        }
                     }
-                }
-
-                if (result) {
-                    break;
                 }
             }
         }
@@ -103,6 +115,8 @@ public class EventsManager {
         return world;
     }
 
+    //WorldGuard Region Check
+
     public boolean WorldguardCheck(Player player) {
         Regions regions = new Regions(config, plugin.getServer());
 
@@ -113,6 +127,8 @@ public class EventsManager {
 
         return set.getRegions().stream().anyMatch(region -> regions.areRegionsAllowed(Arrays.asList(region.getId())));
     }
+
+    //Worlds and Worldguard Region protection status
 
     public boolean checkProtection(Player player, World world, boolean isPlayerInRegion) {
         boolean worldEnabled = config.getConfig().getBoolean("worlds.enabled");

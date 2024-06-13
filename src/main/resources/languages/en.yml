@@ -10,11 +10,19 @@ events:
   remove-effects: "&cYou cannot remove effects in Creative mode."
   entity: "&cYou cannot hit any entity in Creative mode."
   spawnegg: "&cYou cannot spawn mobs in Creative mode."
+  fly: "&cYou cannot fly in Creative mode."
+  blockbreak: "&cYou cannot break blocks in Creative mode."
   plugins:
     chestshop: "&cYou cannot use ChestShop in Creative mode."
 discord:
   not_channel_found: "&cChannel not found."
   events:
+    blockbreak:
+      message: "player named tried to break a block!"
+      actions: "Break Block"
+    fly:
+      message: "player named tried to fly!"
+      actions: "Fly"
     blockplace:
       message: "player named tried to block place!"
       actions: "Block Place"

@@ -10,11 +10,19 @@ events:
   remove-effects: "&cYaratıcı modda etkileri kaldıramazsınız."
   entity: "&cYaratıcı modda herhangi bir moba saldıramazsınız."
   spawnegg: "&cYaratıcı modda yaratık spawn edemezsiniz.."
+  fly: "&cYaratıcı modda uçamazsınız."
+  blockbreak: "&cYaratıcı modda blok kıramazsınız."
   plugins:
     chestshop: "&cYaratıcı modda ChestShop kullanamazsınız."
 discord:
   not_channel_found: "&cKanal bulunamadı."
   events:
+    blockbreak:
+      message: "adlı oyuncu blok kırmaya çalıştı!"
+      actions: "Blok Kırma"
+    fly:
+      message: "adlı oyuncu uçmaya çalıştı!"
+      actions: "Uçma"
     blockplace:
       message: "adlı oyuncu blok yerleştirmeye çalıştı!"
       actions: "Blok Yerleştirme"

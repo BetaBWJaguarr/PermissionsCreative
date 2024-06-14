@@ -101,7 +101,8 @@ public class LangManager {
             Object messageObj = getNestedProperty(props, key);
             if (messageObj != null) {
                 String message = messageObj.toString();
-                return ChatColor.translateAlternateColorCodes('&', message);
+                message = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', message);
+                return TranslateColorCodes.translateHexColorCodes("#", message);
             }
             return getMessage("language-error.unknown_key", language);
         } else {

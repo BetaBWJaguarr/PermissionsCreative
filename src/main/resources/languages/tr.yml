@@ -1,5 +1,5 @@
 events:
-  blockplace: "&cYaratıcı modda blok yerleştiremezsiniz."
+  blockplace: "#467966Yaratıcı modda blok yerleştiremezsiniz."
   dropitem: "&cYaratıcı modda eşya atamazsınız."
   commands: "&cYaratıcı modda komut kullanamazsınız."
   throw: "&cYaratıcı modda herhangi bir eşyayı fırlatamazsınız."

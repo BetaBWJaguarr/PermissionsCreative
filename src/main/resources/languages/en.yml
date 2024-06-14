@@ -1,5 +1,5 @@
 events:
-  blockplace: "&cYou cannot place blocks in Creative mode."
+  blockplace: "#467966You cannot place blocks in Creative mode."
   dropitem: "&cYou cannot drop items in Creative mode"
   commands: "&cYou cannot use commands in Creative mode"
   throw: "&cYou cannot throw any item in Creative mode"

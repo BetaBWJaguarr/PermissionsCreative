@@ -3,6 +3,7 @@ import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
 import beta.com.permissionscreative.filemanager.LogsFile;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
 import beta.com.permissionscreative.object.EventsType;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -41,6 +42,7 @@ public class Logger {
     public void log(String actionKey, String messageKey, Player player, DiscordLogAction discordLogAction) {
         String lang = config.getConfig().getString("lang");
         String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+        prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
         EventsType eventsType = new EventsType(langManager.getMessage(actionKey, lang), player.getName() + " " + langManager.getMessage(messageKey, lang));
 
         if (config.getConfig().getBoolean("logging.discordbot.enabled")) {

@@ -10,6 +10,7 @@ import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -70,6 +71,7 @@ public class CommandsRegister {
 
     private boolean handlePermissionsCreativeCommand(CommandSender sender, Command command, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+        prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
 
         if (args.length == 0) {
             sender.sendMessage(prefix + langManager.getMessage("commands.permissions-creative.no_subcommand",config.getConfig().getString("lang")));

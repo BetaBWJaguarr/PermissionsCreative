@@ -5,6 +5,7 @@ import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,6 +54,7 @@ public class SettingsCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+        prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
 
         if (!(sender instanceof Player)) {
             sender.sendMessage(prefix + languageManager.getMessage("commands.setting_commands.not_player", config.getConfig().getString("lang")));

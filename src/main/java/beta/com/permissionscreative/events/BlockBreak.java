@@ -2,7 +2,6 @@ package beta.com.permissionscreative.events;
 
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
-import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.EventsManager;
 import beta.com.permissionscreative.utils.Logger;
 import org.bukkit.GameMode;

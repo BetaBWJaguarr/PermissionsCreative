@@ -3,6 +3,7 @@ package beta.com.permissionscreative.commands;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.configuration.Config;
+import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -27,6 +28,7 @@ public class DeleteItemAllCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String language = config.getConfig().getString("lang");
         String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+        prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
 
         if (!sender.hasPermission("permissionscreative.deleteitems")) {
             sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.no_permission", language));

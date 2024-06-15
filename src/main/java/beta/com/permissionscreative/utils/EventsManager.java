@@ -2,6 +2,7 @@ package beta.com.permissionscreative.utils;
 
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.languagemanager.LangManager;
+import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
 import beta.com.permissionscreative.worldmanagement.Regions;
 import beta.com.permissionscreative.worldmanagement.World;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -98,6 +99,7 @@ public class EventsManager {
 
         if (result) {
             String prefix = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("prefix"));
+            prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
             String message = langManager.getMessage(messageKey, config.getConfig().getString("lang"));
             player.sendMessage(prefix + " " + message);
         }

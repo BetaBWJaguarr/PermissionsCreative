@@ -1,8 +1,10 @@
 package beta.com.permissionscreative.gui;
 
 import beta.com.paginationapi.itemmanager.ItemManager;
+import beta.com.paginationapi.itemmanager.service.ItemManagerService;
 import beta.com.paginationapi.navigation.Navigation;
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.listener.SettingsGUIListener;
@@ -45,12 +47,12 @@ public class SettingsGUI {
     private Inventory inventory;
     private Config config;
     private LangManager langManager;
-    private Pagination pagination;
+    private PaginationService pagination;
     private SettingsGUIListener settingsGUIListener;
     private Navigation navigation;
     private SearchFunction searchFunction;
 
-    public SettingsGUI(Config config, LangManager langManager, Plugin plugin,Pagination pagination,SearchFunction searchFunction) {
+    public SettingsGUI(Config config, LangManager langManager, Plugin plugin,PaginationService pagination,SearchFunction searchFunction) {
         this.pagination = pagination;
         this.navigation = new Navigation(pagination);
         this.settingsGUIListener = new SettingsGUIListener(this, config, plugin, langManager);
@@ -155,11 +157,11 @@ public class SettingsGUI {
         return inventory;
     }
 
-    public Pagination getPagination() {
+    public PaginationService getPagination() {
         return pagination;
     }
 
-    public ItemManager getitemManager() {
+    public ItemManagerService getitemManager() {
         return pagination.getItemManager();
     }
 }

@@ -41,7 +41,7 @@ public class ReloadItemCommands implements CommandExecutor {
     private LangManager langManager;
     private Config config;
 
-    public ReloadItemCommands(Config config,LangManager langManager,DatabaseManager databaseManager, InventoryManager inventoryManager) {
+    public ReloadItemCommands(Config config, LangManager langManager, DatabaseManager databaseManager, InventoryManager inventoryManager) {
         this.config = config;
         this.langManager = langManager;
         this.databaseManager = databaseManager;
@@ -55,36 +55,46 @@ public class ReloadItemCommands implements CommandExecutor {
         prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
 
         if (!sender.hasPermission("permissionscreative.reloaditems")) {
-            sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.no_permission", language));
+            sendFormattedMessage(sender, prefix, "commands.reload-items.no_permission", language);
             return true;
         }
 
         if (args.length < 2) {
-            sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.usage", language));
+            sendFormattedMessage(sender, prefix, "commands.reload-items.usage", language);
             return false;
         }
 
         Player targetPlayer = Bukkit.getPlayer(args[1]);
         if (targetPlayer == null) {
-            sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.player_not_found", language) + args[1]);
+            sendFormattedMessage(sender, prefix, "commands.reload-items.player_not_found", language, args[1]);
             return false;
         }
 
-        ItemStack[] items = null;
-        try {
-            items = databaseManager.loadPlayerItems(targetPlayer.getUniqueId());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        ItemStack[] items = loadPlayerItems(targetPlayer);
         if (items == null || items.length == 0) {
-            sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.inventory_not_found", language));
+            sendFormattedMessage(sender, prefix, "commands.reload-items.inventory_not_found", language);
             return true;
         }
 
         inventoryManager.setPlayerInventory(targetPlayer, items);
+        sendFormattedMessage(sender, prefix, "commands.reload-items.items_reloaded", language, targetPlayer.getName());
 
-        sender.sendMessage(prefix + langManager.getMessage("commands.reload-items.items_reloaded", language) + targetPlayer.getName());
         return true;
+    }
+
+    private void sendFormattedMessage(CommandSender sender, String prefix, String messageKey, String language, String... args) {
+        String message = langManager.getMessage(messageKey, language);
+        if (args.length > 0) {
+            message += args[0];
+        }
+        sender.sendMessage(prefix + message);
+    }
+
+    private ItemStack[] loadPlayerItems(Player targetPlayer) {
+        try {
+            return databaseManager.loadPlayerItems(targetPlayer.getUniqueId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

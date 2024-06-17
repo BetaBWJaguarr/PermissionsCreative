@@ -31,36 +31,46 @@ public class DeleteItemAllCommands implements CommandExecutor {
         prefix = TranslateColorCodes.translateHexColorCodes("#", prefix);
 
         if (!sender.hasPermission("permissionscreative.deleteitems")) {
-            sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.no_permission", language));
+            sendFormattedMessage(sender, prefix, "commands.delete-items.no_permission", language);
             return true;
         }
 
         try {
             if (args.length > 1) {
-                Player targetPlayer = Bukkit.getPlayer(args[1]);
-                if (targetPlayer == null) {
-                    sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.player_not_found", language) + args[1]);
-                    return true;
-                }
-                String playerUUID = targetPlayer.getUniqueId().toString();
-                boolean result = databaseManager.deletePlayerData(playerUUID);
-                if (result) {
-                    sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.player_data_deleted", language) + args[1]);
-                } else {
-                    sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.not_found_data", language));
-                }
+                handlePlayerDataDeletion(sender, args[1], prefix, language);
             } else {
-                boolean result = databaseManager.deletePlayerData(null);
-                if (result) {
-                    sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.all_data_deleted", language));
-                } else {
-                    sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.not_found_data", language));
-                }
+                handleAllDataDeletion(sender, prefix, language);
             }
         } catch (SQLException e) {
-            sender.sendMessage(prefix + langManager.getMessage("commands.delete-items.error", language));
+            sendFormattedMessage(sender, prefix, "commands.delete-items.error", language);
             e.printStackTrace();
         }
         return true;
+    }
+
+    private void sendFormattedMessage(CommandSender sender, String prefix, String messageKey, String language, String... args) {
+        String message = langManager.getMessage(messageKey, language);
+        if (args.length > 0) {
+            message += " " + args[0];
+        }
+        sender.sendMessage(prefix + message);
+    }
+
+    private void handlePlayerDataDeletion(CommandSender sender, String playerName, String prefix, String language) throws SQLException {
+        Player targetPlayer = Bukkit.getPlayer(playerName);
+        if (targetPlayer == null) {
+            sendFormattedMessage(sender, prefix, "commands.delete-items.player_not_found", language, playerName);
+            return;
+        }
+        String playerUUID = targetPlayer.getUniqueId().toString();
+        boolean result = databaseManager.deletePlayerData(playerUUID);
+        String messageKey = result ? "commands.delete-items.player_data_deleted" : "commands.delete-items.not_found_data";
+        sendFormattedMessage(sender, prefix, messageKey, language, playerName);
+    }
+
+    private void handleAllDataDeletion(CommandSender sender, String prefix, String language) throws SQLException {
+        boolean result = databaseManager.deletePlayerData(null);
+        String messageKey = result ? "commands.delete-items.all_data_deleted" : "commands.delete-items.not_found_data";
+        sendFormattedMessage(sender, prefix, messageKey, language);
     }
 }

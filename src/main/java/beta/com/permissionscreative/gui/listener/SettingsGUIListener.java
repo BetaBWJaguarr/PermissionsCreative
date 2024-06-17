@@ -86,11 +86,11 @@ public class SettingsGUIListener implements Listener {
         String itemName = clickedItem.getItemMeta().getDisplayName();
         Player player = (Player) event.getWhoClicked();
         if (itemName.equals("Next Page")) {
-            paginationListener.onNextPage(player);
+            paginationListener.onPageAction(player,true);
             settingsGUI.GUI(player);
             return;
         } else if (itemName.equals("Previous Page")) {
-            paginationListener.onPreviousPage(player);
+            paginationListener.onPageAction(player,false);
             settingsGUI.GUI(player);
             return;
         }

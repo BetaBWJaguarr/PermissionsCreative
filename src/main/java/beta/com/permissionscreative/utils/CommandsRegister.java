@@ -1,6 +1,7 @@
 package beta.com.permissionscreative.utils;
 
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.commands.DeleteItemAllCommands;
 import beta.com.permissionscreative.commands.ReloadCommands;
@@ -47,12 +48,12 @@ public class CommandsRegister {
     private ReloadItemCommands reloadItemCommands;
     private DatabaseManager databaseManager;
     private InventoryManager inventoryManager;
-    private Pagination pagination;
+    private PaginationService pagination;
     private Plugin plugin;
     private SearchFunction searchFunction;
     private DeleteItemAllCommands deleteItemAllCommands;
 
-    public CommandsRegister(Config config, LangManager langManager, Plugin plugin, DatabaseManager databaseManager, InventoryManager inventoryManager, Pagination pagination,SearchFunction searchFunction) {
+    public CommandsRegister(Config config, LangManager langManager, Plugin plugin, DatabaseManager databaseManager, InventoryManager inventoryManager, PaginationService pagination,SearchFunction searchFunction) {
         this.config = config;
         this.langManager = langManager;
         this.pagination = pagination;

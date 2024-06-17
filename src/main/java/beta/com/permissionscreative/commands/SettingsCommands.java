@@ -1,6 +1,7 @@
 package beta.com.permissionscreative.commands;
 
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
@@ -40,10 +41,10 @@ public class SettingsCommands implements CommandExecutor {
     private LangManager languageManager;
     private Plugin plugin;
     private Config config;
-    private Pagination pagination;
+    private PaginationService pagination;
     private SearchFunction searchFunction;
 
-    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, Pagination pagination,SearchFunction searchFunction) {
+    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, PaginationService pagination,SearchFunction searchFunction) {
         this.languageManager = langManager;
         this.plugin = plugin;
         this.config = config;

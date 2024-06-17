@@ -1,7 +1,11 @@
 package beta.com.permissionscreative;
 
 import beta.com.paginationapi.itemmanager.ItemManager;
+import beta.com.paginationapi.itemmanager.service.ItemManagerService;
+import beta.com.paginationapi.itemmanager.service.impl.ItemManagerServiceImpl;
 import beta.com.paginationapi.page.Pagination;
+import beta.com.paginationapi.page.service.PaginationService;
+import beta.com.paginationapi.page.service.impl.PaginationServiceImpl;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
@@ -61,13 +65,15 @@ public final class Main extends JavaPlugin {
         DatabaseManager databaseManager = new DatabaseManager(this,config);
         InventoryManager inventoryManager = new InventoryManager(databaseManager,config);
 
-        ItemManager itemManager = new ItemManager();
-        Pagination pagination = new Pagination(8,itemManager);
-        SearchFunction searchFunction = new SearchFunction(pagination,itemManager);
+        ItemManagerService itemManagerservice = new ItemManagerServiceImpl();
+        ItemManager itemmanager = itemManagerservice.createItemManager();
+        PaginationService paginationService = new PaginationServiceImpl(8,itemManagerservice);
+        Pagination pagination = paginationService.createPagination();
+        SearchFunction searchFunction = new SearchFunction(paginationService,itemManagerservice);
         getServer().getPluginManager().registerEvents(searchFunction, this);
 
 
-        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,pagination,searchFunction);
+        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,paginationService,searchFunction);
         commandsRegister.registerCommands();
 
         try {

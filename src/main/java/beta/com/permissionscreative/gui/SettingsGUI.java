@@ -118,12 +118,15 @@ public class SettingsGUI {
         addItemsToInventory(items);
 
         inventory.setItem(9, searchFunction.createSearchButton());
+        ItemStack shieldItem = new ItemStack(Material.SHIELD);
+        ItemMeta shieldMeta = shieldItem.getItemMeta();
+        shieldMeta.setDisplayName(ChatColor.RED + "WorldGuard Protection");
+        shieldItem.setItemMeta(shieldMeta);
+        inventory.setItem(10, shieldItem);
 
 
         UUID playerId = player.getUniqueId();
 
-        int page = pagination.getCurrentPageForPlayer(playerId);
-        pagination.setPageForPlayer(playerId, page);
 
         int slot = pagination.hasPreviousPage(playerId) ? 1 : 0;
         for (ItemStack item : pagination.getCurrentPageItems(playerId)) {

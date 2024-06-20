@@ -63,5 +63,7 @@ public class RegisterListener {
         pm.registerEvents(new ChestShopProtection(config,eventsManager,logger,discordLogAction),plugin);
         pm.registerEvents(new FlyEvent(config,eventsManager,discordLogAction,logger),plugin);
         pm.registerEvents(new BlockBreak(config,eventsManager,discordLogAction,logger),plugin);
+        pm.registerEvents(new MonsterSpawnEvent(config,eventsManager,logger,discordLogAction),plugin);
+        pm.registerEvents(new ItemPickup(config,eventsManager,discordLogAction,logger),plugin);
     }
 }

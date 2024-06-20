@@ -3,11 +3,14 @@ package beta.com.permissionscreative.gui.listener;
 import beta.com.paginationapi.listener.PaginationListener;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
+import beta.com.permissionscreative.gui.worldsregions.WorldGuardGUI;
+import beta.com.permissionscreative.gui.worldsregions.choicesmenu.ChoicesGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -83,6 +86,17 @@ public class SettingsGUIListener implements Listener {
             return;
         }
 
+        if (clickedItem.getType() == Material.SHIELD) {
+            WorldGuardGUI worldGuardGUI = new WorldGuardGUI();
+            worldGuardGUI.open((Player) event.getWhoClicked());
+            ChoicesGUI choicesGUI = new ChoicesGUI();
+
+            WorldGuardGUIListener worldGuardGUIListener = new WorldGuardGUIListener(worldGuardGUI,plugin,choicesGUI,settingsGUI);
+
+
+            return;
+        }
+
         String itemName = clickedItem.getItemMeta().getDisplayName();
         Player player = (Player) event.getWhoClicked();
         if (itemName.equals("Next Page")) {
@@ -131,9 +145,10 @@ public class SettingsGUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getView().getTitle().equals("Settings")) {
+        if (event.getInventory().equals(settingsGUI.getInventory())) {
             Player player = (Player) event.getPlayer();
             UUID playerId = player.getUniqueId();
+            HandlerList.unregisterAll(this);
             boolean pageMemory = config.getConfig().getBoolean("gui.page_memory");
             if (!pageMemory) {
                 settingsGUI.getPagination().rememberPages(playerId, false);

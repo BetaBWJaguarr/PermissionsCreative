@@ -12,6 +12,8 @@ events:
   spawnegg: "&cYaratıcı modda yaratık spawn edemezsiniz.."
   fly: "&cYaratıcı modda uçamazsınız."
   blockbreak: "&cYaratıcı modda blok kıramazsınız."
+  buildable_mob: "&cYaratıcı modda golem-mob oluşturamazsınız."
+  pickup: "&cYaratıcı modda eşya toplayamazsınız."
   plugins:
     chestshop: "&cYaratıcı modda ChestShop kullanamazsınız."
 discord:
@@ -59,6 +61,12 @@ discord:
     chestshop:
       message: "adlı oyuncu ChestShop eklentisini kullanmaya çalıştı!"
       actions: "ChestShop Kullanma"
+    buildable_mob:
+      message: "adlı oyuncu golem-mob oluşturmaya çalıştı!"
+      actions: "Golem-Mob Oluşturma"
+    pickup:
+      message: "adlı oyuncu eşya toplamaya çalıştı!"
+      actions: "Eşya Toplama"
 gui:
   settingsgui:
     success: "&a{settingName} {settingStatus} olarak değiştirildi."

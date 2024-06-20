@@ -28,6 +28,8 @@ permissions:
   spawnegg: true
   fly: true
   break: true
+  buildable_mob: true
+  pickup: true
   plugins:
     chestshop: true
 list:

@@ -12,6 +12,8 @@ events:
   spawnegg: "&cYou cannot spawn mobs in Creative mode."
   fly: "&cYou cannot fly in Creative mode."
   blockbreak: "&cYou cannot break blocks in Creative mode."
+  buildable_mob: "&cYou cannot build a mob in Creative mode."
+  pickup: "&cYou cannot pick up items in Creative mode."
   plugins:
     chestshop: "&cYou cannot use ChestShop in Creative mode."
 discord:
@@ -59,6 +61,12 @@ discord:
     chestshop:
       message: "player named tried to use ChestShop plugins!"
       actions: "ChestShop Usage"
+    buildable_mob:
+      message: "player named tried to build a mob!"
+      actions: "Build Mob"
+    pickup:
+      message: "player named tried to pick up an item!"
+      actions: "Pick Up Item"
 gui:
   settingsgui:
     success: "&a{settingName} has been changed to {settingStatus}."

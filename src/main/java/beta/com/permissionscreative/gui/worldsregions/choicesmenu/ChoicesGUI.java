@@ -1,5 +1,6 @@
 package beta.com.permissionscreative.gui.worldsregions.choicesmenu;
 
+import beta.com.permissionscreative.gui.worldsregions.WorldGuardGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,7 +13,10 @@ public class ChoicesGUI {
 
     private Inventory inventory;
 
-    public ChoicesGUI() {
+    private WorldGuardGUI worldGuardGUI;
+
+    public ChoicesGUI(WorldGuardGUI worldGuardGUI) {
+        this.worldGuardGUI = worldGuardGUI;
         inventory = Bukkit.createInventory(null, 9, "Choices Menu");
 
         ItemStack addItem = new ItemStack(Material.GREEN_WOOL);
@@ -42,6 +46,10 @@ public class ChoicesGUI {
 
     public void open(Player player) {
         player.openInventory(inventory);
+    }
+
+    public WorldGuardGUI getWorldGuardGUI() {
+        return worldGuardGUI;
     }
 
     public Inventory getInventory() {

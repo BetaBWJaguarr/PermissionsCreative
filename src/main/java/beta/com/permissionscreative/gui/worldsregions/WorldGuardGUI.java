@@ -8,13 +8,27 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class WorldGuardGUI {
 
     private Inventory inventory;
+    private HashMap<UUID, String> lastSelections;
+
+
+    public void setLastSelection(UUID playerUUID, String lastSelection) {
+        this.lastSelections.put(playerUUID, lastSelection);
+    }
+
+    public String getLastSelection(UUID playerUUID) {
+        return lastSelections.get(playerUUID);
+    }
+
 
     public WorldGuardGUI() {
         inventory = Bukkit.createInventory(null, 9, "WorldGuard Menu");
-
+        lastSelections = new HashMap<>();
 
         ItemStack worldItem = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta worldMeta = worldItem.getItemMeta();

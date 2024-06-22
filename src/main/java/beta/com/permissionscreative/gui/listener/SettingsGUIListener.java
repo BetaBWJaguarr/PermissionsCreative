@@ -90,7 +90,7 @@ public class SettingsGUIListener implements Listener {
             WorldGuardGUI worldGuardGUI = new WorldGuardGUI();
             worldGuardGUI.open((Player) event.getWhoClicked());
 
-            WorldGuardGUIListener worldGuardGUIListener = new WorldGuardGUIListener(worldGuardGUI,plugin,settingsGUI,config);
+            WorldGuardGUIListener worldGuardGUIListener = new WorldGuardGUIListener(worldGuardGUI,plugin,settingsGUI,config,settingsGUI.getPaginationManager(),langManager);
 
 
             return;

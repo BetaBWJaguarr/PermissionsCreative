@@ -5,6 +5,9 @@ import beta.com.permissionscreative.gui.SettingsGUI;
 import beta.com.permissionscreative.gui.worldsregions.WorldGuardGUI;
 import beta.com.permissionscreative.gui.worldsregions.choicesmenu.ChoicesGUI;
 import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.ListGUI;
+import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
+import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.listener.ListGUIListener;
+import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
@@ -23,18 +27,22 @@ public class WorldGuardGUIListener implements Listener {
     private final ChoicesGUI choicesGUI;
     private final SettingsGUI settingsGUI;
     private final Config config;
+    private final PaginationManager paginationManager;
+    private final LangManager langManager;
     private UUID playerUUID;
     private boolean isWaitingForInput = false;
 
 
 
 
-    public WorldGuardGUIListener(WorldGuardGUI worldGuardGUI, Plugin plugin, SettingsGUI settingsGUI, Config config) {
+    public WorldGuardGUIListener(WorldGuardGUI worldGuardGUI, Plugin plugin, SettingsGUI settingsGUI, Config config, PaginationManager paginationManager, LangManager langManager) {
         this.worldGuardGUI = worldGuardGUI;
         this.plugin = plugin;
         this.choicesGUI = new ChoicesGUI(worldGuardGUI);
         this.settingsGUI = settingsGUI;
         this.config = config;
+        this.paginationManager = paginationManager;
+        this.langManager = langManager;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -49,7 +57,11 @@ public class WorldGuardGUIListener implements Listener {
         }
 
         if (event.getCurrentItem().getType() == Material.ARROW) {
-            settingsGUI.GUI((Player) event.getWhoClicked());
+            ItemMeta meta = event.getCurrentItem().getItemMeta();
+            if (meta.hasDisplayName() && ChatColor.stripColor(meta.getDisplayName()).equals("Back to Main Menu")) {
+                settingsGUI.GUI((Player) event.getWhoClicked());
+                plugin.getServer().getPluginManager().registerEvents(new SettingsGUIListener(settingsGUI, config, plugin,langManager), plugin);
+            }
         }
 
         if (event.getCurrentItem() != null) {
@@ -68,7 +80,8 @@ public class WorldGuardGUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClick2(InventoryClickEvent event) {
-        ListGUI listGUI = new ListGUI(config);
+        ListGUI listGUI = new ListGUI(config,paginationManager.getPaginationService());
+        plugin.getServer().getPluginManager().registerEvents(new ListGUIListener(listGUI), plugin);
 
 
         if (event.getInventory().equals(choicesGUI.getInventory())) {

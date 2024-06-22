@@ -8,6 +8,7 @@ import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.listener.SettingsGUIListener;
+import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -51,10 +52,12 @@ public class SettingsGUI {
     private SettingsGUIListener settingsGUIListener;
     private Navigation navigation;
     private SearchFunction searchFunction;
+    private PaginationManager paginationManager;
 
-    public SettingsGUI(Config config, LangManager langManager, Plugin plugin,PaginationService pagination,SearchFunction searchFunction) {
+    public SettingsGUI(Config config, LangManager langManager, Plugin plugin, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager) {
         this.pagination = pagination;
         this.navigation = new Navigation(pagination);
+        this.paginationManager = paginationManager;
         this.settingsGUIListener = new SettingsGUIListener(this, config, plugin, langManager);
         this.config = config;
         this.langManager = langManager;
@@ -166,5 +169,9 @@ public class SettingsGUI {
 
     public ItemManagerService getitemManager() {
         return pagination.getItemManager();
+    }
+
+    public PaginationManager getPaginationManager() {
+        return paginationManager;
     }
 }

@@ -11,6 +11,7 @@ import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.discord.DiscordBot;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
+import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
 import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.CommandsRegister;
@@ -32,9 +33,15 @@ public final class Main extends JavaPlugin {
 
     private CommandsRegister commandsRegister;
 
+    private PaginationManager paginationManager;
+
     private EventsManager eventsManager;
 
     private DiscordBot discordBot;
+
+    private ItemManagerService itemManagerService;
+
+    private PaginationService paginationService;
 
     private DiscordLogAction discordLogAction;
 
@@ -59,21 +66,28 @@ public final class Main extends JavaPlugin {
 
         reloadConfig();
 
+        paginationManager = new PaginationManager();
+        paginationManager.createPagination();
+
+
         registerListener = new RegisterListener(this,config,langManager,eventsManager,discordLogAction,logger);
         registerListener.registerEvents();
 
         DatabaseManager databaseManager = new DatabaseManager(this,config);
         InventoryManager inventoryManager = new InventoryManager(databaseManager,config);
 
-        ItemManagerService itemManagerservice = new ItemManagerServiceImpl();
-        ItemManager itemmanager = itemManagerservice.createItemManager();
-        PaginationService paginationService = new PaginationServiceImpl(8,itemManagerservice);
-        Pagination pagination = paginationService.createPagination();
-        SearchFunction searchFunction = new SearchFunction(paginationService,itemManagerservice);
+
+
+        itemManagerService = new ItemManagerServiceImpl();
+        paginationService = new PaginationServiceImpl(8, itemManagerService);
+
+        Pagination pagination = createPagination();
+
+        SearchFunction searchFunction = new SearchFunction(paginationService,itemManagerService);
         getServer().getPluginManager().registerEvents(searchFunction, this);
 
 
-        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,paginationService,searchFunction);
+        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,paginationService,searchFunction,paginationManager);
         commandsRegister.registerCommands();
 
         try {
@@ -102,6 +116,12 @@ public final class Main extends JavaPlugin {
                 return;
             }
         }
+    }
+
+
+    private Pagination createPagination() {
+        ItemManager itemManager = itemManagerService.createItemManager();
+        return paginationService.createPagination();
     }
 
     @Override

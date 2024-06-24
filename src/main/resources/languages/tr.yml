@@ -70,6 +70,17 @@ discord:
 gui:
   settingsgui:
     success: "&a{settingName} {settingStatus} olarak değiştirildi."
+  choicesgui:
+    add: "&aLütfen eklemek istediğiniz bölgeyi yazın."
+  listgui:
+    add:
+      success: "&a{region} başarıyla eklendi."
+      failure: "&cBir hata oluştu {region} eklenirken."
+    remove:
+      success: "&a{region} başarıyla kaldırıldı."
+      failure: "&cBir hata oluştu {region} kaldırılırken."
+    toggle:
+      success: "&3{selection} &abaşarıyla &2{status} &aolarak ayarlandı."
 commands:
   permissions-creative:
     no_subcommand: " &cLütfen bir komut belirtin."

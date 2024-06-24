@@ -89,6 +89,7 @@ public class SettingsGUIListener implements Listener {
         if (clickedItem.getType() == Material.SHIELD) {
             WorldGuardGUI worldGuardGUI = new WorldGuardGUI();
             worldGuardGUI.open((Player) event.getWhoClicked());
+            HandlerList.unregisterAll(this);
 
             WorldGuardGUIListener worldGuardGUIListener = new WorldGuardGUIListener(worldGuardGUI,plugin,settingsGUI,config,settingsGUI.getPaginationManager(),langManager);
 

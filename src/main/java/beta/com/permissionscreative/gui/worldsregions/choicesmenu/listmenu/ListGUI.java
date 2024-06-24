@@ -65,28 +65,46 @@ public class ListGUI {
     public void openMenu(Player player) {
         UUID playerId = player.getUniqueId();
 
+        int currentPage = paginationService.getCurrentPageForPlayer(playerId);
+        int totalItems = paginationService.getItemManager().getItems().size();
+        int totalPages = (int) Math.ceil((double) totalItems / paginationService.getPageSize());
+
+        if (currentPage >= totalPages) {
+            currentPage = totalPages - 1;
+            if (currentPage < 0) {
+                currentPage = 0;
+            }
+            paginationService.setPageForPlayer(playerId, currentPage);
+        }
+
         inventory.clear();
 
         List<ItemStack> pageItems = paginationService.getCurrentPageItems(playerId);
-        int itemCount = pageItems.size();
+        int itemCount = pageItems != null ? pageItems.size() : 0;
 
-        int slot = paginationService.hasPreviousPage(playerId) ? 1 : 0;
-        for (ItemStack item : pageItems) {
-            if (slot >= 8) break;
-            inventory.setItem(slot, item);
-            slot++;
+        if (itemCount == 0) {
+            player.openInventory(inventory);
+            return;
+        }
+
+        int slot = 0;
+        int maxItems = 8;
+
+        if (paginationService.hasPreviousPage(playerId)) {
+            inventory.setItem(slot++, navigation.createPreviousPageButton(playerId));
+        }
+
+        for (int i = 0; i < Math.min(itemCount, maxItems); i++) {
+            inventory.setItem(slot++, pageItems.get(i));
         }
 
         if (paginationService.hasNextPage(playerId)) {
             inventory.setItem(8, navigation.createNextPageButton(playerId));
         }
 
-        if (paginationService.hasPreviousPage(playerId)) {
-            inventory.setItem(0, navigation.createPreviousPageButton(playerId));
-        }
-
         player.openInventory(inventory);
     }
+
 
     public Inventory getInventory() {
         return inventory;

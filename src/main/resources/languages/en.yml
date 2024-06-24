@@ -70,6 +70,17 @@ discord:
 gui:
   settingsgui:
     success: "&a{settingName} has been changed to {settingStatus}."
+  choicesgui:
+    add: "&aPlease type your which region add"
+  listgui:
+    add:
+      success: "&aThe {region} has been added."
+      failure: "&cAn error occurred while adding the {region}."
+    remove:
+      success: "&aThe {region} has been removed."
+      failure: "&cAn error occurred while removing the {region}."
+    toggle:
+      success: "&3{selection} &ahas been successfully set to &e{status}."
 commands:
   permissions-creative:
     no_subcommand: " &cPlease specify a subcommand."

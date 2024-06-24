@@ -18,6 +18,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,8 +35,6 @@ public class WorldGuardGUIListener implements Listener {
     private boolean isWaitingForInput = false;
 
 
-
-
     public WorldGuardGUIListener(WorldGuardGUI worldGuardGUI, Plugin plugin, SettingsGUI settingsGUI, Config config, PaginationManager paginationManager, LangManager langManager) {
         this.worldGuardGUI = worldGuardGUI;
         this.plugin = plugin;
@@ -46,6 +46,8 @@ public class WorldGuardGUIListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+
+    //ChoicesGUI and WorldGuardGUI Listener
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getInventory().equals(worldGuardGUI.getInventory()) || event.getInventory().equals(choicesGUI.getInventory())) {
@@ -60,7 +62,7 @@ public class WorldGuardGUIListener implements Listener {
             ItemMeta meta = event.getCurrentItem().getItemMeta();
             if (meta.hasDisplayName() && ChatColor.stripColor(meta.getDisplayName()).equals("Back to Main Menu")) {
                 settingsGUI.GUI((Player) event.getWhoClicked());
-                plugin.getServer().getPluginManager().registerEvents(new SettingsGUIListener(settingsGUI, config, plugin,langManager), plugin);
+                plugin.getServer().getPluginManager().registerEvents(new SettingsGUIListener(settingsGUI, config, plugin, langManager), plugin);
             }
         }
 
@@ -78,11 +80,16 @@ public class WorldGuardGUIListener implements Listener {
     }
 
 
-    @EventHandler
-    public void onInventoryClick2(InventoryClickEvent event) {
-        ListGUI listGUI = new ListGUI(config,paginationManager.getPaginationService());
-        plugin.getServer().getPluginManager().registerEvents(new ListGUIListener(listGUI), plugin);
+    //Choices GUI Listener
 
+    @EventHandler
+    public void onInventoryClick2(InventoryClickEvent event) throws IOException {
+        ListGUI listGUI = new ListGUI(config, paginationManager.getPaginationService());
+        plugin.getServer().getPluginManager().registerEvents(new ListGUIListener(listGUI, worldGuardGUI, plugin, config,langManager), plugin);
+
+        if (event.getCurrentItem() == null) {
+            return;
+        }
 
         if (event.getInventory().equals(choicesGUI.getInventory())) {
             Material type = event.getCurrentItem().getType();
@@ -90,24 +97,56 @@ public class WorldGuardGUIListener implements Listener {
             playerUUID = player.getUniqueId();
             if (type == Material.GREEN_WOOL) {
                 isWaitingForInput = true;
-                ((Player) event.getWhoClicked()).sendMessage(ChatColor.GREEN + "Please type your which region add");
+                ((Player) event.getWhoClicked()).sendMessage(langManager.getMessage("gui.choicesgui.add", config.getConfig().getString("lang")));
                 player.closeInventory();
             } else if (type == Material.RED_WOOL) {
                 String lastSelection = choicesGUI.getWorldGuardGUI().getLastSelection(playerUUID);
                 listGUI.createMenu(lastSelection);
                 listGUI.openMenu((Player) event.getWhoClicked());
+            } else if (type == Material.LEVER) {
+                String lastSelection = choicesGUI.getWorldGuardGUI().getLastSelection(playerUUID);
+
+                boolean currentValue = config.getConfig().getBoolean(lastSelection + ".enabled");
+                config.getConfig().set(lastSelection + ".enabled", !currentValue);
+                config.getConfig().save(plugin.getDataFolder() + "/config.yml");
+
+
+                String message = langManager.getMessage("gui.listgui.toggle.success", config.getConfig().getString("lang"));
+                message = message.replace("{selection}", lastSelection).replace("{status}", (!currentValue) ? "Enabled" : "Disabled");
+                player.sendMessage(message);
+
+                player.closeInventory();
             }
         }
     }
 
 
-
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    public void onPlayerChat(AsyncPlayerChatEvent event) throws IOException {
         if (isWaitingForInput && event.getPlayer().getUniqueId().equals(playerUUID)) {
             isWaitingForInput = false;
             String regionToAdd = event.getMessage();
             event.setCancelled(true);
+
+            String lastSelection = choicesGUI.getWorldGuardGUI().getLastSelection(playerUUID);
+
+            List<String> regions = config.getConfig().getStringList(lastSelection + ".regions");
+
+            if (!regions.contains(regionToAdd)) {
+                regions.add(regionToAdd);
+
+                config.getConfig().set(lastSelection + ".regions", regions);
+
+                config.getConfig().save(plugin.getDataFolder() + "/config.yml");
+
+                String message = langManager.getMessage("gui.listgui.add.success", config.getConfig().getString("lang"));
+                message = message.replace("{region}", regionToAdd);
+                event.getPlayer().sendMessage(message);
+            } else {
+                String message = langManager.getMessage("gui.listgui.add.failure", config.getConfig().getString("lang"));
+                message = message.replace("{region}", regionToAdd);
+                event.getPlayer().sendMessage(message);
+            }
         }
     }
 }

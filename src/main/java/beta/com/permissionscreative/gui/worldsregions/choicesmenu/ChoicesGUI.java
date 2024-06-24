@@ -32,6 +32,7 @@ public class ChoicesGUI {
         removeItem.setItemMeta(removeMeta);
 
 
+
         inventory.setItem(5, removeItem);
 
         ItemStack backItem = new ItemStack(Material.ARROW);
@@ -41,6 +42,13 @@ public class ChoicesGUI {
 
 
         inventory.setItem(0, backItem);
+
+        ItemStack toggleItem = new ItemStack(Material.LEVER);
+        ItemMeta toggleMeta = toggleItem.getItemMeta();
+        toggleMeta.setDisplayName(ChatColor.YELLOW + "Enable/Disable");
+        toggleItem.setItemMeta(toggleMeta);
+
+        inventory.setItem(7, toggleItem);
 
     }
 

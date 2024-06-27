@@ -5,7 +5,7 @@ import beta.com.permissionscreative.gui.SettingsGUI;
 import beta.com.permissionscreative.gui.worldsregions.WorldGuardGUI;
 import beta.com.permissionscreative.gui.worldsregions.choicesmenu.ChoicesGUI;
 import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.ListGUI;
-import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
+import beta.com.permissionscreative.gui.PaginationManager;
 import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.listener.ListGUIListener;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;

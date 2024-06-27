@@ -1,14 +1,12 @@
 package beta.com.permissionscreative.gui;
 
-import beta.com.paginationapi.itemmanager.ItemManager;
 import beta.com.paginationapi.itemmanager.service.ItemManagerService;
 import beta.com.paginationapi.navigation.Navigation;
-import beta.com.paginationapi.page.Pagination;
 import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.listener.SettingsGUIListener;
-import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
+import beta.com.permissionscreative.gui.listmode.ListModeGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,8 +51,9 @@ public class SettingsGUI {
     private Navigation navigation;
     private SearchFunction searchFunction;
     private PaginationManager paginationManager;
+    private PaginationManager listModeGUI;
 
-    public SettingsGUI(Config config, LangManager langManager, Plugin plugin, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager) {
+    public SettingsGUI(Config config, LangManager langManager, Plugin plugin, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager,PaginationManager listModeGUI) {
         this.pagination = pagination;
         this.navigation = new Navigation(pagination);
         this.paginationManager = paginationManager;
@@ -62,6 +61,7 @@ public class SettingsGUI {
         this.config = config;
         this.langManager = langManager;
         this.searchFunction = searchFunction;
+        this.listModeGUI = listModeGUI;
     }
 
 
@@ -121,11 +121,9 @@ public class SettingsGUI {
         addItemsToInventory(items);
 
         inventory.setItem(9, searchFunction.createSearchButton());
-        ItemStack shieldItem = new ItemStack(Material.SHIELD);
-        ItemMeta shieldMeta = shieldItem.getItemMeta();
-        shieldMeta.setDisplayName(ChatColor.RED + "WorldGuard Protection");
-        shieldItem.setItemMeta(shieldMeta);
-        inventory.setItem(10, shieldItem);
+
+        inventory.setItem(10, createCustomItem(Material.SHIELD, "WorldGuard Protection"));
+        inventory.setItem(11, createCustomItem(Material.EMERALD, "List Mode GUI"));
 
 
         UUID playerId = player.getUniqueId();
@@ -159,6 +157,14 @@ public class SettingsGUI {
         plugin.getServer().getPluginManager().registerEvents(settingsGUIListener, plugin);
     }
 
+    private ItemStack createCustomItem(Material material, String displayName) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.RED + displayName);
+        item.setItemMeta(itemMeta);
+        return item;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -173,5 +179,9 @@ public class SettingsGUI {
 
     public PaginationManager getPaginationManager() {
         return paginationManager;
+    }
+
+    public PaginationManager getListModeGUI() {
+        return listModeGUI;
     }
 }

@@ -2,7 +2,10 @@ package beta.com.permissionscreative.gui.listener;
 
 import beta.com.paginationapi.listener.PaginationListener;
 import beta.com.permissionscreative.configuration.Config;
+import beta.com.permissionscreative.gui.PaginationManager;
 import beta.com.permissionscreative.gui.SettingsGUI;
+import beta.com.permissionscreative.gui.listmode.ListModeGUI;
+import beta.com.permissionscreative.gui.listmode.listener.ListModeGUIListener;
 import beta.com.permissionscreative.gui.worldsregions.WorldGuardGUI;
 import beta.com.permissionscreative.gui.worldsregions.choicesmenu.ChoicesGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
@@ -86,14 +89,8 @@ public class SettingsGUIListener implements Listener {
             return;
         }
 
-        if (clickedItem.getType() == Material.SHIELD) {
-            WorldGuardGUI worldGuardGUI = new WorldGuardGUI();
-            worldGuardGUI.open((Player) event.getWhoClicked());
-            HandlerList.unregisterAll(this);
-
-            WorldGuardGUIListener worldGuardGUIListener = new WorldGuardGUIListener(worldGuardGUI,plugin,settingsGUI,config,settingsGUI.getPaginationManager(),langManager);
-
-
+        if (clickedItem.getType() == Material.SHIELD || clickedItem.getType() == Material.EMERALD) {
+            handleGUICreation(clickedItem.getType(), (Player) event.getWhoClicked());
             return;
         }
 
@@ -140,6 +137,20 @@ public class SettingsGUIListener implements Listener {
 
             event.setCancelled(true);
         }
+    }
+
+    private void handleGUICreation(Material material, Player player) {
+        if (material == Material.SHIELD) {
+            WorldGuardGUI worldGuardGUI = new WorldGuardGUI();
+            worldGuardGUI.open(player);
+            WorldGuardGUIListener worldGuardGUIListener = new WorldGuardGUIListener(worldGuardGUI, plugin, settingsGUI, config, settingsGUI.getPaginationManager(),langManager);
+        } else if (material == Material.EMERALD) {
+            ListModeGUI listModeGUI = new ListModeGUI();
+            ListModeGUIListener listModeGUIListener = new ListModeGUIListener(listModeGUI,settingsGUI.getListModeGUI(),config,langManager,plugin);
+            plugin.getServer().getPluginManager().registerEvents(listModeGUIListener, plugin);
+            player.openInventory(listModeGUI.getInventory());
+        }
+        HandlerList.unregisterAll(this);
     }
 
 

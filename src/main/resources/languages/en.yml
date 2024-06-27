@@ -81,6 +81,8 @@ gui:
       failure: "&cAn error occurred while removing the {region}."
     toggle:
       success: "&3{selection} &ahas been successfully set to &e{status}."
+  editgui:
+    modeChange: "&eMode &a{mode} &eis now in &d{newStatus}."
 commands:
   permissions-creative:
     no_subcommand: " &cPlease specify a subcommand."

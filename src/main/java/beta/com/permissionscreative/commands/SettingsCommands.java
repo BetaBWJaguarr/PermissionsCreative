@@ -1,11 +1,10 @@
 package beta.com.permissionscreative.commands;
 
-import beta.com.paginationapi.page.Pagination;
 import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.SettingsGUI;
-import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
+import beta.com.permissionscreative.gui.PaginationManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
 import org.bukkit.ChatColor;
@@ -45,14 +44,16 @@ public class SettingsCommands implements CommandExecutor {
     private PaginationService pagination;
     private SearchFunction searchFunction;
     private PaginationManager paginationManager;
+    private PaginationManager ListModeGUI;
 
-    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager) {
+    public SettingsCommands(Plugin plugin, LangManager langManager, Config config, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager, PaginationManager listModeGUI) {
         this.languageManager = langManager;
         this.plugin = plugin;
         this.config = config;
         this.pagination = pagination;
         this.searchFunction = searchFunction;
         this.paginationManager = paginationManager;
+        this.ListModeGUI = listModeGUI;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class SettingsCommands implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin,pagination,searchFunction,paginationManager);
+        SettingsGUI settingsGUI = new SettingsGUI(config,languageManager,plugin,pagination,searchFunction,paginationManager,ListModeGUI);
         settingsGUI.open(plugin, player);
         return true;
     }

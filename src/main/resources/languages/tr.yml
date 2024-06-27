@@ -81,6 +81,8 @@ gui:
       failure: "&cBir hata oluştu {region} kaldırılırken."
     toggle:
       success: "&3{selection} &abaşarıyla &2{status} &aolarak ayarlandı."
+  editgui:
+    modeChange: "&eMod statüsü &a{mode} &eşimdi &d{newStatus} &aoldu."
 commands:
   permissions-creative:
     no_subcommand: " &cLütfen bir komut belirtin."

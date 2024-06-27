@@ -1,6 +1,5 @@
 package beta.com.permissionscreative.utils;
 
-import beta.com.paginationapi.page.Pagination;
 import beta.com.paginationapi.page.service.PaginationService;
 import beta.com.paginationapi.search.SearchFunction;
 import beta.com.permissionscreative.commands.DeleteItemAllCommands;
@@ -9,7 +8,7 @@ import beta.com.permissionscreative.commands.ReloadItemCommands;
 import beta.com.permissionscreative.commands.SettingsCommands;
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
-import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
+import beta.com.permissionscreative.gui.PaginationManager;
 import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.languagemanager.TranslateColorCodes;
@@ -54,13 +53,15 @@ public class CommandsRegister {
     private SearchFunction searchFunction;
     private DeleteItemAllCommands deleteItemAllCommands;
     private PaginationManager paginationManager;
+    private PaginationManager ListModeGUI;
 
-    public CommandsRegister(Config config, LangManager langManager, Plugin plugin, DatabaseManager databaseManager, InventoryManager inventoryManager, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager) {
+    public CommandsRegister(Config config, LangManager langManager, Plugin plugin, DatabaseManager databaseManager, InventoryManager inventoryManager, PaginationService pagination, SearchFunction searchFunction, PaginationManager paginationManager,PaginationManager ListModeGUI) {
         this.config = config;
         this.langManager = langManager;
         this.pagination = pagination;
         this.searchFunction = searchFunction;
-        this.settingsCommands = new SettingsCommands(plugin, langManager, config,pagination,searchFunction,paginationManager);
+        this.ListModeGUI = ListModeGUI;
+        this.settingsCommands = new SettingsCommands(plugin, langManager, config,pagination,searchFunction,paginationManager,ListModeGUI);
         this.reloadCommands = new ReloadCommands(config, langManager);
         this.reloadItemCommands = new ReloadItemCommands(config, langManager,databaseManager,inventoryManager);
         this.deleteItemAllCommands = new DeleteItemAllCommands(databaseManager,langManager,config);

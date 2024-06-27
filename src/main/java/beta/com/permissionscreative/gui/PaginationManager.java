@@ -1,4 +1,4 @@
-package beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu;
+package beta.com.permissionscreative.gui;
 
 import beta.com.paginationapi.itemmanager.ItemManager;
 import beta.com.paginationapi.itemmanager.service.ItemManagerService;

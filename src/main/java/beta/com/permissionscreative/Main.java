@@ -11,7 +11,7 @@ import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.databasemanager.DatabaseManager;
 import beta.com.permissionscreative.discord.DiscordBot;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
-import beta.com.permissionscreative.gui.worldsregions.choicesmenu.listmenu.PaginationManager;
+import beta.com.permissionscreative.gui.PaginationManager;
 import beta.com.permissionscreative.inventorymanager.InventoryManager;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.CommandsRegister;
@@ -34,6 +34,8 @@ public final class Main extends JavaPlugin {
     private CommandsRegister commandsRegister;
 
     private PaginationManager paginationManager;
+
+    private PaginationManager ListModeGUI;
 
     private EventsManager eventsManager;
 
@@ -69,6 +71,9 @@ public final class Main extends JavaPlugin {
         paginationManager = new PaginationManager();
         paginationManager.createPagination();
 
+        ListModeGUI = new PaginationManager();
+        ListModeGUI.createPagination();
+
 
         registerListener = new RegisterListener(this,config,langManager,eventsManager,discordLogAction,logger);
         registerListener.registerEvents();
@@ -87,7 +92,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(searchFunction, this);
 
 
-        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,paginationService,searchFunction,paginationManager);
+        commandsRegister = new CommandsRegister(config,langManager,this,databaseManager,inventoryManager,paginationService,searchFunction,paginationManager,ListModeGUI);
         commandsRegister.registerCommands();
 
         try {

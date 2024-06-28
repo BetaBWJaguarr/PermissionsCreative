@@ -63,7 +63,7 @@ public class ListModeGUIListener implements Listener {
             String modeKey = modeMapping.get(itemName);
             playerSelections.put(player.getUniqueId(), modeKey);
             EditGUI editGUI = new EditGUI();
-            plugin.getServer().getPluginManager().registerEvents(new EditGUIListener(this, config, langManager, plugin, editGUI), plugin);
+            plugin.getServer().getPluginManager().registerEvents(new EditGUIListener(this, config, langManager, plugin, listModeGUIS,editGUI), plugin);
             player.openInventory(editGUI.getInventory());
         }
 

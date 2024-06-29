@@ -82,7 +82,10 @@ gui:
     toggle:
       success: "&3{selection} &abaşarıyla &2{status} &aolarak ayarlandı."
   editgui:
-    modeChange: "&eMod statüsü &a{mode} &eşimdi &d{newStatus} &aoldu."
+    modechange: "&e{mode} için mod başarıyla {newStatus} olarak değiştirildi."
+    type: "&aEklenecek öğeyi yazın:"
+    added: "&a{item} öğesi {selection} listesine başarıyla eklendi."
+    removed: "&a{item} öğesi {selection} listesinden başarıyla kaldırıldı."
 commands:
   permissions-creative:
     no_subcommand: " &cLütfen bir komut belirtin."

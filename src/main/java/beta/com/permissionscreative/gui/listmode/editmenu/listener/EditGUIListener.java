@@ -61,17 +61,19 @@ public class EditGUIListener implements Listener {
             setModeStatus(playerSelection, newStatus);
 
 
-            String message = langManager.getMessage("gui.editgui.modeChange", config.getConfig().getString("lang"))
+            String message = langManager.getMessage("gui.editgui.modechange", config.getConfig().getString("lang"))
                     .replace("{mode}", playerSelection)
                     .replace("{newStatus}", newStatus);
             player.sendMessage(message);
+            player.closeInventory();
         } else if (itemName.equals("Add")) {
             setAddingItem(player.getUniqueId(), true);
-            player.sendMessage("Please type the item you want to add in the chat.");
+            String message = langManager.getMessage("gui.editgui.type", config.getConfig().getString("lang"));
+            player.sendMessage(message);
             player.closeInventory();
         } else if (itemName.equals("Remove")) {
             EditListGUI editListGUI = new EditListGUI(ListModeGUI,listModeGUIListener,config);
-            EditListGUIListener editListGUIListener = new EditListGUIListener(editListGUI);
+            EditListGUIListener editListGUIListener = new EditListGUIListener(editListGUI,langManager,config);
             plugin.getServer().getPluginManager().registerEvents(editListGUIListener, plugin);
             editListGUI.GUI(player);
         }
@@ -111,7 +113,10 @@ public class EditGUIListener implements Listener {
             config.getConfig().set("list." + playerSelection, items);
             config.getConfig().save(plugin.getDataFolder() + "/config.yml");
 
-            player.sendMessage("Item " + itemToAdd + " has been added to " + playerSelection + ".");
+            String message = langManager.getMessage("gui.editgui.added", config.getConfig().getString("lang"))
+                    .replace("{item}", itemToAdd)
+                    .replace("{selection}", playerSelection);
+            player.sendMessage(message);
 
         }
     }

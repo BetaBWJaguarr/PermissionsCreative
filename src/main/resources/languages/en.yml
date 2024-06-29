@@ -82,7 +82,10 @@ gui:
     toggle:
       success: "&3{selection} &ahas been successfully set to &e{status}."
   editgui:
-    modeChange: "&eMode &a{mode} &eis now in &d{newStatus}."
+    modechange: "&eMode for {mode} successfully changed to {newStatus}."
+    type: "&aType the item to add:"
+    added: "&a{item} has been successfully added to the {selection} list."
+    removed: "&a{item} has been successfully removed from the {selection} list."
 commands:
   permissions-creative:
     no_subcommand: " &cPlease specify a subcommand."

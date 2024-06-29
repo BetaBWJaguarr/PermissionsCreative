@@ -1,7 +1,9 @@
 package beta.com.permissionscreative.gui.listmode.editmenu.listmenu.listener;
 
 import beta.com.paginationapi.listener.PaginationListener;
+import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.gui.listmode.editmenu.listmenu.EditListGUI;
+import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,12 +16,16 @@ import java.util.List;
 
 public class EditListGUIListener implements Listener {
     private EditListGUI editListGUI;
+    private LangManager langManager;
     private PaginationListener paginationListener;
+    private Config config;
 
-    public EditListGUIListener(EditListGUI editListGUI) {
+    public EditListGUIListener(EditListGUI editListGUI, LangManager langManager, Config config) {
         this.editListGUI = editListGUI;
         this.paginationListener = new PaginationListener(editListGUI.getPagination().getPaginationService(),editListGUI.getPagination().getPaginationService().getItemManager());
 
+        this.langManager = langManager;
+        this.config = config;
     }
 
     @EventHandler
@@ -58,7 +64,11 @@ public class EditListGUIListener implements Listener {
             itemsList.remove(title);
             editListGUI.getConfig().getConfig().set("list." + playerSelection, itemsList);
             editListGUI.getConfig().saveConfig();
-            player.sendMessage("Item " + title + " has been removed from " + playerSelection + ".");
+            String message = langManager.getMessage("gui.editgui.removed", config.getConfig().getString("lang"))
+                    .replace("{item}", title)
+                    .replace("{selection}", playerSelection);
+            player.sendMessage(message);
+
             player.closeInventory();
         }
     }

@@ -2,6 +2,20 @@ package beta.com.permissionscreative.languagemanager;
 
 import org.bukkit.ChatColor;
 
+/**
+ * The TranslateColorCodes class provides static methods to translate hexadecimal color codes
+ * in messages into legacy Bukkit ChatColor codes.
+ *
+ * <p>
+ * It includes methods for:
+ * - Translating hexadecimal color codes in a message to legacy Bukkit ChatColor codes.
+ * - Handling extraction, replacement, and finding of hexadecimal color codes within a message.
+ *
+ * <p>
+ * This class facilitates the conversion of modern hexadecimal color formatting into
+ * compatible legacy formats for display in Bukkit-based applications.
+ */
+
 public class TranslateColorCodes {
 
     public static String translateHexColorCodes(String startTag, String message) {

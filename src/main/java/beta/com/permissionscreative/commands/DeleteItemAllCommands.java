@@ -13,6 +13,41 @@ import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 
+
+/**
+ * This class, {@code DeleteItemAllCommands}, implements the {@code CommandExecutor} interface
+ * to handle the `/deleteitems` command in a Bukkit/Spigot plugin environment. The command allows
+ * authorized users to delete player data from a database managed by {@link DatabaseManager}.
+ *
+ * <p>
+ * The class is initialized with instances of {@link DatabaseManager}, {@link LangManager}, and
+ * {@link Config} to facilitate database operations, language localization, and configuration
+ * management, respectively. It retrieves the language preferences and message formatting from
+ * the configuration file to ensure the command's response is localized and formatted correctly.
+ *
+ * <p>
+ * Command execution begins by checking the sender's permissions to ensure they have the necessary
+ * access (`permissionscreative.deleteitems`). If the sender lacks permission, an appropriate
+ * message is sent using {@link LangManager} to inform them of their insufficient privileges.
+ *
+ * <p>
+ * The command supports two modes of operation based on the number of arguments provided:
+ * - If only one argument is provided, the command deletes all player data stored in the database
+ *   using {@link DatabaseManager#deletePlayerData(String)}.
+ * - If two arguments are provided, the command attempts to locate the player by name and delete
+ *   their data using {@link DatabaseManager#deletePlayerData(String)}.
+ *
+ * <p>
+ * Error handling is managed through {@link SQLException} handling, ensuring that any database
+ * operation errors are properly logged and reported to the command sender through
+ * {@link LangManager} messages.
+ *
+ * <p>
+ * Overall, {@code DeleteItemAllCommands} provides robust functionality for managing player data
+ * deletion with permissions control, error handling, and localized messaging, making it an essential
+ * component for administrative tasks in Bukkit/Spigot plugin development.
+ */
+
 public class DeleteItemAllCommands implements CommandExecutor {
     private DatabaseManager databaseManager;
     private LangManager langManager;

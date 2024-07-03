@@ -13,22 +13,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The LangManager class is responsible for managing language files and translations in a Bukkit
- * plugin.
- * It allows for the loading, copying, and reloading of language files, as well as retrieving
- * messages in a specific language.
+ * The LangManager class manages language files and translations in a Bukkit plugin.
+ * It facilitates loading, copying, and reloading of language files, and provides methods
+ * to retrieve messages in a specific language.
  *
- * The class maintains a map of languages, where each language is represented by a map of key-value
- * pairs.
- * Each key represents a message identifier, and the corresponding value is the message text in the
- * respective language.
+ * <p>
+ * The class maintains a map of languages, where each language is represented by a map of key-value pairs.
+ * Each key in these maps represents a message identifier, and the corresponding value is the message text
+ * in the respective language.
  *
- * The class also provides a method to retrieve a message in a specific language. If the requested
- * language or message key does not exist,
- * it will return an error message in the requested language.
+ * <p>
+ * Upon instantiation, LangManager loads language files based on provided language codes. It ensures the necessary
+ * files exist by copying them from resources if absent. It specifically loads files for English ("en") and Turkish ("tr")
+ * languages during initialization.
  *
- * This class is particularly useful for plugins that need to support multiple languages and provide
- * user messages in the user's preferred language.
+ * <p>
+ * The class supports reloading of language files through the {@link #reloadLanguageFiles()} method, which clears
+ * the current language map and reloads all language files.
+ *
+ * <p>
+ * Messages can be retrieved using {@link #getMessage(String, String)}. This method takes a message key and a language
+ * code as parameters. It retrieves the message from the corresponding language map. If the requested language or message key
+ * does not exist, it falls back to an error message in the requested language indicating either an unknown key or language.
+ *
+ * <p>
+ * LangManager also supports translation of color codes using {@link TranslateColorCodes#translateHexColorCodes(String, String)}.
+ * This method converts hexadecimal color codes found in messages into legacy Bukkit ChatColor codes for display.
+ *
+ * <p>
+ * This class is designed for Bukkit plugins that need to provide multi-language support, ensuring user messages are
+ * displayed in the preferred language of the player.
  */
 
 

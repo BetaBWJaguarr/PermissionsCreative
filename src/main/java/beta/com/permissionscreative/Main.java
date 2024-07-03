@@ -23,6 +23,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * The Main class is the main entry point and core plugin class for PermissionsCreative.
+ * It manages plugin initialization, configuration loading, event registration, command registration,
+ * database connection, and Discord bot integration.
+ *
+ * <p>
+ * Upon plugin enablement, it checks for required dependencies like PaginationAPI, WorldGuard, and Vault.
+ * It initializes configurations, language management, event handling, logging, and pagination for GUIs.
+ * Database connection and task scheduling for saving player inventories are also set up during this phase.
+ *
+ * <p>
+ * The plugin's configuration can be reloaded dynamically, especially for Discord bot integration if enabled.
+ *
+ * <p>
+ * During plugin disablement, necessary cleanup operations are expected to be added.
+ *
+ * <p>
+ * This class serves as the central control for PermissionsCreative, managing its lifecycle and integration
+ * with various Bukkit services and external APIs.
+ */
+
 public final class Main extends JavaPlugin {
 
     private Config config;

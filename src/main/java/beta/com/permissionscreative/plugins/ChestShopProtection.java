@@ -2,7 +2,6 @@ package beta.com.permissionscreative.plugins;
 
 import beta.com.permissionscreative.configuration.Config;
 import beta.com.permissionscreative.discord.actions.DiscordLogAction;
-import beta.com.permissionscreative.languagemanager.LangManager;
 import beta.com.permissionscreative.utils.EventsManager;
 import beta.com.permissionscreative.utils.Logger;
 import beta.com.permissionscreative.worldmanagement.World;

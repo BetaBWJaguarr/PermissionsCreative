@@ -16,6 +16,17 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
+/**
+ * EditListGUI is a class that manages a GUI for editing item lists in a Minecraft plugin.
+ * It uses PaginationManager for navigation and Config for settings.
+ *
+ * Key Features:
+ * - Creates and manages an interactive inventory GUI.
+ * - Handles pagination of items in the GUI.
+ * - Updates list items in the plugin's configuration.
+ */
+
 public class EditListGUI {
     private Inventory inventory;
     private PaginationManager pagination;

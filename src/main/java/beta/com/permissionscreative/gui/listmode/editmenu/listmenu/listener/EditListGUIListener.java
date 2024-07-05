@@ -14,6 +14,33 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import java.util.List;
 
+/**
+ * The EditListGUIListener class handles interactions with the EditListGUI in a Bukkit/Spigot Minecraft plugin.
+ *
+ * <p>This listener responds to inventory click events within the EditListGUI, allowing players to navigate pages,
+ * and remove items from the list. It utilizes a PaginationListener for GUI navigation and interacts with configuration
+ * settings using Config.</p>
+ *
+ * <p>Class Functionality:
+ * <ul>
+ *     <li>Handles {@link InventoryClickEvent} to detect and process clicks within the EditListGUI inventory.</li>
+ *     <li>Manages page navigation actions and item removal using {@link PaginationListener}.</li>
+ *     <li>Updates configuration settings for list items, saving changes to config.yml.</li>
+ *     <li>Uses {@link LangManager} to retrieve and display localized messages to players.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Example usage:
+ * <pre>
+ * {@code
+ * EditListGUIListener listener = new EditListGUIListener(editListGUI, langManager, config);
+ * plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+ * }
+ * </pre>
+ * </p>
+ */
+
+
 public class EditListGUIListener implements Listener {
     private EditListGUI editListGUI;
     private LangManager langManager;
@@ -22,7 +49,7 @@ public class EditListGUIListener implements Listener {
 
     public EditListGUIListener(EditListGUI editListGUI, LangManager langManager, Config config) {
         this.editListGUI = editListGUI;
-        this.paginationListener = new PaginationListener(editListGUI.getPagination().getPaginationService(),editListGUI.getPagination().getPaginationService().getItemManager());
+        this.paginationListener = new PaginationListener(editListGUI.getPagination().getPaginationService(), editListGUI.getPagination().getPaginationService().getItemManager());
 
         this.langManager = langManager;
         this.config = config;
@@ -53,23 +80,36 @@ public class EditListGUIListener implements Listener {
         }
 
         if (displayName.equals("Next Page")) {
-            paginationListener.onPageAction(player,true);
-            editListGUI.GUI(player);
+            nextPage(player);
         } else if (displayName.equals("Previous Page")) {
-            paginationListener.onPageAction(player,false);
-            editListGUI.GUI(player);
+            previousPage(player);
         } else {
-            String playerSelection = editListGUI.getListModeGUIListener().getPlayerSelection(player.getUniqueId());
-            List<String> itemsList = editListGUI.getConfig().getConfig().getStringList("list." + playerSelection);
-            itemsList.remove(title);
-            editListGUI.getConfig().getConfig().set("list." + playerSelection, itemsList);
-            editListGUI.getConfig().saveConfig();
-            String message = langManager.getMessage("gui.editgui.removed", config.getConfig().getString("lang"))
-                    .replace("{item}", title)
-                    .replace("{selection}", playerSelection);
-            player.sendMessage(message);
-
-            player.closeInventory();
+            removeItem(player, title);
         }
+    }
+
+    private void nextPage(Player player) {
+        paginationListener.onPageAction(player, true);
+        editListGUI.GUI(player);
+    }
+
+    private void previousPage(Player player) {
+        paginationListener.onPageAction(player, false);
+        editListGUI.GUI(player);
+    }
+
+    private void removeItem(Player player, String title) {
+        String playerSelection = editListGUI.getListModeGUIListener().getPlayerSelection(player.getUniqueId());
+        List<String> itemsList = editListGUI.getConfig().getConfig().getStringList("list." + playerSelection);
+        itemsList.remove(title);
+        editListGUI.getConfig().getConfig().set("list." + playerSelection, itemsList);
+        editListGUI.getConfig().saveConfig();
+
+        String message = langManager.getMessage("gui.editgui.removed", config.getConfig().getString("lang"))
+                .replace("{item}", title)
+                .replace("{selection}", playerSelection);
+        player.sendMessage(message);
+
+        player.closeInventory();
     }
 }

@@ -23,6 +23,46 @@ import java.util.List;
 import java.util.UUID;
 
 
+/**
+ * The WorldGuardGUIListener class manages interactions with GUIs related to WorldGuard settings and regions
+ * within a Bukkit/Spigot Minecraft plugin. It handles inventory clicks, player chat events for input,
+ * and updates to configuration settings.
+ *
+ * <p>This listener responds to inventory click events within the WorldGuardGUI and ChoicesGUI,
+ * facilitating navigation, toggling settings, and adding regions. It utilizes a PaginationManager
+ * for GUI navigation and interacts with configuration settings and language messages using Config and LangManager.</p>
+ *
+ * <p><strong>Key Responsibilities:</strong>
+ * <ul>
+ *     <li>Responds to {@link InventoryClickEvent}s in the WorldGuardGUI and ChoicesGUI to manage interaction.</li>
+ *     <li>Manages settings toggles and region additions using {@link ListGUI} and {@link ListGUIListener}.</li>
+ *     <li>Updates configuration settings for WorldGuard regions and toggles, saving changes to config.yml.</li>
+ *     <li>Utilizes {@link LangManager} to fetch and display localized messages for player feedback.</li>
+ * </ul>
+ * </p>
+ *
+ * <p><strong>Usage Example:</strong>
+ * <pre>
+ * {@code
+ * WorldGuardGUIListener listener = new WorldGuardGUIListener(worldGuardGUI, plugin, settingsGUI, config, paginationManager, langManager);
+ * plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+ * }
+ * </pre>
+ * </p>
+ *
+ * <p><strong>Interaction Details:</strong>
+ * <ul>
+ *     <li>Handles clicking on specific items in the GUI to trigger actions like opening menus or toggling settings.</li>
+ *     <li>Manages chat input from players to add new regions when prompted by ChoicesGUI actions.</li>
+ *     <li>Updates and saves configuration changes to reflect updated WorldGuard settings and region lists.</li>
+ * </ul>
+ * </p>
+ *
+ * <p><strong>Note:</strong> This class assumes the presence of related GUIs (WorldGuardGUI, ChoicesGUI),
+ * PaginationManager for navigation, and properly configured instances of Config and LangManager for
+ * configuration and language handling respectively.</p>
+ */
+
 public class WorldGuardGUIListener implements Listener {
     private final WorldGuardGUI worldGuardGUI;
     private final Plugin plugin;

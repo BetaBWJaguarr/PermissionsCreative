@@ -2,12 +2,10 @@ package beta.com.permissionscreative.gui.listener;
 
 import beta.com.paginationapi.listener.PaginationListener;
 import beta.com.permissionscreative.configuration.Config;
-import beta.com.permissionscreative.gui.PaginationManager;
 import beta.com.permissionscreative.gui.SettingsGUI;
 import beta.com.permissionscreative.gui.listmode.ListModeGUI;
 import beta.com.permissionscreative.gui.listmode.listener.ListModeGUIListener;
 import beta.com.permissionscreative.gui.worldsregions.WorldGuardGUI;
-import beta.com.permissionscreative.gui.worldsregions.choicesmenu.ChoicesGUI;
 import beta.com.permissionscreative.languagemanager.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

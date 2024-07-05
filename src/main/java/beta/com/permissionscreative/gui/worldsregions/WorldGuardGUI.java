@@ -11,6 +11,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
+
+/**
+ * The WorldGuardGUI class represents a graphical user interface for managing worlds and regions
+ * in a Bukkit/Spigot Minecraft plugin.
+ *
+ * <p>This GUI provides options to view and interact with worlds and regions through inventory
+ * interactions. It includes buttons for navigating between different menus and remembering the
+ * last selection of each player.</p>
+ *
+*/
+
 public class WorldGuardGUI {
 
     private Inventory inventory;

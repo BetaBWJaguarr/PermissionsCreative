@@ -9,6 +9,32 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+
+/**
+ * The ChoicesGUI class represents a graphical user interface (GUI) for selecting options related to
+ * WorldGuard regions in a Bukkit/Spigot Minecraft plugin.
+ *
+ * <p>This GUI provides options for adding, removing, enabling/disabling, and navigating back to the main menu.
+ * The choices are presented as clickable items in an inventory menu, which can be opened by a player.</p>
+ *
+ * <p>Class Functionality:
+ * <ul>
+ *     <li>Creates an inventory menu with specific items representing actions (Add, Remove, Enable/Disable, Back to Main Menu).</li>
+ *     <li>Handles the interaction logic to display this inventory to players.</li>
+ *     <li>Provides methods to access the WorldGuardGUI instance and the created inventory.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Example usage:
+ * <pre>
+ * {@code
+ * ChoicesGUI choicesGUI = new ChoicesGUI(worldGuardGUI);
+ * choicesGUI.open(player);
+ * }
+ * </pre>
+ * </p>
+ */
+
 public class ChoicesGUI {
 
     private Inventory inventory;
